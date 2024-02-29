@@ -6,7 +6,7 @@ import MobileNavbar from './MobileNavbar'
 
 const Navbar = () => {
   return (
-    <div className='px-8 py-2 rounded-[30px] bg-white flex items-center w-[80%]
+    <div className='px-8 py-2 rounded-[30px] bg-[#f4ecd7] flex items-center w-[80%]
      h-[3.2rem] mt-5 ml-36 max-lg:mx-auto max-lg:w-[90%] justify-between'>
         <Link href={"/"}>
         <div>

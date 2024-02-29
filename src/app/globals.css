@@ -6,13 +6,65 @@
   .mobile_navbar_btn {
     @apply text-[.9rem] font-semibold text-center border py-2 px-6 rounded-[1.5rem] hover:bg-black hover:text-white hover:border-white duration-200;
   }
+  .home_page_card_css{
+    @apply flex flex-col items-center border bg-[#f4ecd7] w-32 h-28 py-2 px-4 max-md:h-24 max-md:w-28
+  }
 }
 
-@layer base {
-  * {
-    @apply border-border;
+
+
+
+
+
+.app-footer__marquee {
+  color: #f4ecd7;
+  backdrop-filter: blur(4px);
+  font-size: calc(0.8925rem + 6.43571vw);
+  font-weight: 400;
+  padding: 0.25em 0;
+  white-space: nowrap;
+  --marquee-animation-duration: 15s;
+}
+
+.u-marquee {
+  --marquee-gap: 1ch;
+  overflow: hidden;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.u-marquee,
+.u-marquee__content {
+  display: flex;
+  gap: var(--marquee-gap);
+}
+
+.u-marquee__content {
+  animation: marquee var(--marquee-animation-duration) linear infinite;
+  flex-shrink: 0;
+  justify-content: space-around;
+  max-width: -moz-fit-content;
+  max-width: fit-content;
+  
+}
+
+.u-marquee__content > * {
+  white-space: nowrap;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translate(0);
   }
-  body {
-    @apply bg-background text-foreground;
+
+  to {
+    transform: translate(calc(-100% - var(--marquee-gap)));
   }
+}
+
+@font-face {
+  font-family: "Uzi";
+  src: url("https://raw.githubusercontent.com/vickkie/uzitrake/main/fonts/MonumentExtended-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
 }
