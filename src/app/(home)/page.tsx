@@ -1,3 +1,4 @@
+import CreditCardSection from "@/components/shared/CreditCardSection";
 import HomeScrollEffect from "@/components/shared/HomeScrollEffect";
 import LandingPage from "@/components/shared/LandingPage";
 import CardsInfo from "@/components/shared/info";
@@ -9,6 +10,7 @@ export default function Home() {
       <LandingPage/>
       <HomeScrollEffect/>
       <CardsInfo/>
+      <CreditCardSection/>
     </>
   );
 }

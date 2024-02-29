@@ -43,8 +43,8 @@ const MobileNavbar = () => {
                     <p>About</p>
                 </Link>
 
-                <Link href={"/sign-in"} className='mobile_navbar_btn'>
-                    <p>sign-in</p>
+                <Link href={"/sign-up"} className='mobile_navbar_btn'>
+                    <p>sign-up</p>
                 </Link>
 
                 <Link href={"/log-in"} className='mobile_navbar_btn'>
