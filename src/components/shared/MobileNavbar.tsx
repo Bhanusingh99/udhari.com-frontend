@@ -18,7 +18,7 @@ const MobileNavbar = () => {
         <SheetTrigger>
         <AlignRight size={28}/>
         </SheetTrigger>
-        <SheetContent className="bg-white">
+        <SheetContent className="bg-[#f4ecd7]">
           <SheetHeader>
             <SheetTitle>
                 <Link href={"/"} className="flex gap-2 items-center">

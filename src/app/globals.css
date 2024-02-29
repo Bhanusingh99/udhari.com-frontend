@@ -4,10 +4,16 @@
 
 @layer components {
   .mobile_navbar_btn {
-    @apply text-[.9rem] font-semibold text-center border py-2 px-6 rounded-[1.5rem] hover:bg-black hover:text-white hover:border-white duration-200;
+    @apply text-[.9rem] font-semibold text-center border border-black py-2 px-6 rounded-[1.5rem] hover:bg-black hover:text-white hover:border-white duration-200;
   }
   .home_page_card_css{
     @apply flex flex-col items-center border bg-[#f4ecd7] w-32 h-28 py-2 px-4 max-md:h-24 max-md:w-28
+  }
+  .bg_light_color {
+    @apply bg-[#f4ecd7]
+  }
+  .text-light{
+    @apply text-[#f4ecd7]
   }
 }
 
