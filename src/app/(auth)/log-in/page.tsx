@@ -1,8 +1,40 @@
+"use client"
+import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
 
 const LogIn = () => {
+  const router = useRouter()
+
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  });
+
+  const handleChange = (e:any) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e:any) => {
+    e.preventDefault();
+
+    const api = axios.create({
+      baseURL:"http://localhost:4000",
+      withCredentials:true
+    })
+    const res = await api.post("/v1/api/log-in",formData);
+    console.log(res.data.success);
+    if(res.data.success){
+      router.push("/")
+    }
+  };
+
   return (
     <div className="w-[80%] mb-10 bg-white flex mx-auto border overflow-hidden mt-16">
         <div className="w-[45%] max-md:hidden">
@@ -32,6 +64,8 @@ const LogIn = () => {
                   type="email"
                   name="email"
                   id="email"
+                  value={formData.email}
+                  onChange={(e) => handleChange(e)}
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="name@company.com"
                 />
@@ -42,28 +76,17 @@ const LogIn = () => {
                   type="password"
                   name="password"
                   id="password"
+                  value={formData.password}
+                  onChange={(e) => handleChange(e)}
                   placeholder="••••••••"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 />
               </div>
               <div className="flex items-center justify-between">
-                <div className="flex items-start">
-                  <div className="flex items-center h-5">
-                    <input
-                      id="remember"
-                      aria-describedby="remember"
-                      type="checkbox"
-                      className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-                    />
-                  </div>
-                  <div className="ml-3 text-sm">
-                    <label htmlFor="remember" className="text-gray-500 dark:text-gray-300">Remember me</label>
-                  </div>
-                </div>
                 <Link href="#" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot password?</Link>
               </div>
               <button
-                type="submit"
+                onClick={(e)=>handleSubmit(e)}
                 className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-black"
               >
                 Log-in

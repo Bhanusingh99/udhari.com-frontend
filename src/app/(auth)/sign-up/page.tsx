@@ -3,9 +3,6 @@ import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import cookie from 'js-cookie';
-import { getToken } from "@/helper/getToken";
-import { cookies } from 'next/headers'
 import { useRouter } from "next/navigation";
 
 
@@ -46,26 +43,26 @@ const Sign_Up = () => {
 
 
   return (
-    <div className="w-[80%] mb-10 bg-white flex mx-auto border overflow-hidden mt-10">
-        <div className="w-[45%] max-lg:hidden">
+    <div className="w-[80%] mb-10 bg-white flex mx-auto border overflow-hidden mt-10 max-md:w-[90%]">
+        <div className="w-[40%] max-lg:hidden">
         <Image
             src={"/icons/sign_up_last.jpg"}
-            width={700}
+            width={600}
             height={400}
             alt="sign-up"
-            className="p object-cover"
+            className="p object-cover w-[500px] h-[620px]"
         />
         </div>
 
 
-         <div className="w-[55%] max-md:w-full">
-            <div className="min-w-full h-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 ">
-              <div className="p-2 space-y-4 md:space-y-6 sm:p-8">
+         <div className="w-[60%] max-md:w-full max-md:p-2">
+            <div className="min-w-full h-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
+              <div className=" space-y-4 md:space-y-6 sm:p-8 mt-[-2rem] max-md:mt-0">
                 <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
                   Create an account
                 </h1>
-                <form className="space-y-4 md:space-y-6" action="#">
-                <div>
+                <form className="space-y-4 md:space-y-6 " action="#">
+                <div className="mt-[-1rem] max-md:mt-0">
                     <label
                       htmlFor="firstname"
                       className="block text-sm font-medium text-gray-900"
@@ -78,7 +75,7 @@ const Sign_Up = () => {
                       id="firstname"
                       value={formData.firstname}
                       onChange={(e)=>handleChange(e)}
-                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2"
                       placeholder="Bhanu"
                       required
                     />
@@ -97,7 +94,7 @@ const Sign_Up = () => {
                       id="lastname"
                       value={formData.lastname}
                       onChange={(e)=>handleChange(e)}
-                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2"
                       placeholder="Singh"
                       required
                     />
@@ -115,7 +112,7 @@ const Sign_Up = () => {
                       id="username"
                       value={formData.username}
                       onChange={(e)=>handleChange(e)}
-                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2"
                       placeholder="username"
                       required
                     />
@@ -133,7 +130,7 @@ const Sign_Up = () => {
                       id="email"
                       value={formData.email}
                       onChange={(e)=>handleChange(e)}
-                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2"
                       placeholder="name@company.com"
                       required
                     />
@@ -152,7 +149,7 @@ const Sign_Up = () => {
                       placeholder="••••••••"
                       value={formData.password}
                       onChange={(e)=>handleChange(e)}
-                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2"
                       required
                     />
                   </div>
