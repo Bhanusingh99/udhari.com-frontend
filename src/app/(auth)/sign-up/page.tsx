@@ -1,8 +1,50 @@
+'use client'
+import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import cookie from 'js-cookie';
+import { getToken } from "@/helper/getToken";
+import { cookies } from 'next/headers'
+import { useRouter } from "next/navigation";
+
+
 
 const Sign_Up = () => {
+  const router = useRouter()
+
+
+  const [formData, setFormData] = useState({
+    firstname: '',
+    lastname: '',
+    username: '',
+    email: '',
+    password: '',
+  });
+
+  const handleChange = (e:any) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e:any) => {
+    e.preventDefault();
+
+    const api = axios.create({
+      baseURL:"http://localhost:4000",
+      withCredentials:true
+    })
+    const res = await api.post("/v1/api/sign-up",formData);
+    console.log(res.data.success);
+    if(res.data.success){
+      router.push("/")
+    }
+  };
+
+
   return (
     <div className="w-[80%] mb-10 bg-white flex mx-auto border overflow-hidden mt-10">
         <div className="w-[45%] max-lg:hidden">
@@ -17,20 +59,71 @@ const Sign_Up = () => {
 
 
          <div className="w-[55%] max-md:w-full">
-
-            <Link href={'/'} className="flex justify-center items-center">
-                <Image src={'/icons/money.png'} height={70} width={70} alt="logo" />
-            </Link>
             <div className="min-w-full h-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 ">
-              <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+              <div className="p-2 space-y-4 md:space-y-6 sm:p-8">
                 <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
                   Create an account
                 </h1>
                 <form className="space-y-4 md:space-y-6" action="#">
+                <div>
+                    <label
+                      htmlFor="firstname"
+                      className="block text-sm font-medium text-gray-900"
+                    >
+                      firstname
+                    </label>
+                    <input
+                      type="text"
+                      name="firstname"
+                      id="firstname"
+                      value={formData.firstname}
+                      onChange={(e)=>handleChange(e)}
+                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                      placeholder="Bhanu"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="lastname"
+                      className="block text-sm font-medium text-gray-900"
+                    >
+                      lastname
+                    </label>
+                    <input
+                      type="text"
+                      name="lastname"
+                      id="lastname"
+                      value={formData.lastname}
+                      onChange={(e)=>handleChange(e)}
+                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                      placeholder="Singh"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="username"
+                      className="block text-sm font-medium text-gray-900"
+                    >
+                      username
+                    </label>
+                    <input
+                      type="text"
+                      name="username"
+                      id="username"
+                      value={formData.username}
+                      onChange={(e)=>handleChange(e)}
+                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                      placeholder="username"
+                      required
+                    />
+                  </div>
                   <div>
                     <label
                       htmlFor="email"
-                      className="block mb-2 text-sm font-medium text-gray-900"
+                      className="block text-sm font-medium text-gray-900"
                     >
                       Your email
                     </label>
@@ -38,6 +131,8 @@ const Sign_Up = () => {
                       type="email"
                       name="email"
                       id="email"
+                      value={formData.email}
+                      onChange={(e)=>handleChange(e)}
                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                       placeholder="name@company.com"
                       required
@@ -46,7 +141,7 @@ const Sign_Up = () => {
                   <div>
                     <label
                       htmlFor="password"
-                      className="block mb-2 text-sm font-medium text-gray-900 "
+                      className="block text-sm font-medium text-gray-900 "
                     >
                       Password
                     </label>
@@ -55,23 +150,9 @@ const Sign_Up = () => {
                       name="password"
                       id="password"
                       placeholder="••••••••"
+                      value={formData.password}
+                      onChange={(e)=>handleChange(e)}
                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label
-                      htmlFor="confirm-password"
-                      className="block mb-2 text-sm font-medium text-gray-900"
-                    >
-                      Confirm password
-                    </label>
-                    <input
-                      type="confirm-password"
-                      name="confirm-password"
-                      id="confirm-password"
-                      placeholder="••••••••"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                       required
                     />
                   </div>
@@ -101,7 +182,7 @@ const Sign_Up = () => {
                     </div>
                   </div>
                   <button
-                    type="submit"
+                  onClick={(e)=>handleSubmit(e)}
                     className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 bg-black text-center "
                   >
                     Create an account
