@@ -23,7 +23,7 @@ const Navbar = () => {
                 <p>Home</p>
             </Link>
 
-            <Link href={"/dashboard"} className='text-[.9rem] font-semibold'>
+            <Link href={"/dashboard/customer"} className='text-[.9rem] font-semibold'>
                 <p>Product</p>
             </Link>
 

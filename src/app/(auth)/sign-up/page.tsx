@@ -43,7 +43,7 @@ const Sign_Up = () => {
 
 
   return (
-    <div className="w-[80%] mb-10 bg-white flex mx-auto border overflow-hidden mt-10 max-md:w-[90%]">
+    <div className="w-[80%] mb-16 bg-white flex mx-auto border overflow-hidden mt-20 max-md:w-[90%]">
         <div className="w-[40%] max-lg:hidden">
         <Image
             src={"/icons/sign_up_last.jpg"}

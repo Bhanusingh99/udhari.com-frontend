@@ -4,7 +4,7 @@
 
 @layer components {
   .mobile_navbar_btn {
-    @apply text-[.9rem] font-semibold text-center border border-black py-2 px-6 rounded-[1.5rem] hover:bg-black hover:text-white hover:border-white duration-200;
+    @apply text-[.9rem] font-semibold text-center border mt-1 border-black py-2 px-6 hover:bg-black hover:text-white hover:border-white duration-200;
   }
   .home_page_card_css{
     @apply flex flex-col items-center border bg-white w-32 h-28 py-2 px-4 max-md:h-24 max-md:w-28
@@ -15,13 +15,21 @@
   .text-light{
     @apply text-white
   }
+  .sidebar-button{
+    @apply text-[#999] hover:bg-[#333] py-1.5 px-2 w-full duration-200 rounded-[20px] text-center flex gap-2 mt-1 justify-center items-center
+  }
 }
 
 
 
 
 
-
+.shadowcss{
+  box-shadow:9px 9px 0 #222 ;
+}
+/* .shadowcss:hover{
+  box-shadow:7px 7px 0 #222 ;
+} */
 .app-footer__marquee {
   color: white;
   backdrop-filter: blur(4px);
