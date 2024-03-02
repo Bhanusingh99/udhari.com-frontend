@@ -4,10 +4,10 @@ import React from 'react'
 const LandingPage = () => {
   return (
     <>
-    <div className="flex w-[80%] mx-auto mt-12 max-md:mt-2">
+    <div className="flex w-[80%] mx-auto mt-20 max-md:mt-2">
       <div className="w-[60%] flex flex-col py-10 px-2 max-md:px-0 max-lg:w-full max-md:py-4">
         <div>
-              <h1 className="text-[#f4ecd7] text-[2.5rem] font-semibold leading-[3.35rem] max-sm:text-[2rem]">
+              <h1 className="text-white text-[2.5rem] font-semibold leading-[3.35rem] max-sm:text-[2rem]">
                 Let's manage your like Pro finances now, to make the future
                 <span className="max-md:hidden"> easier to make the future easier..</span>
               </h1>
@@ -22,7 +22,7 @@ const LandingPage = () => {
 
         <div className="flex w-full gap-6 mt-8">
             <button className="py-2.5 px-6 bg_light_color font-semibold">Get started</button>
-            <button className="py-2.5 px-6 border text-[#f4ecd7] font-semibold">Introduction</button>
+            <button className="py-2.5 px-6 border text-white font-semibold">Introduction</button>
         </div>
 
         <div className="w-full flex gap-6 mt-8 max-sm:gap-2">

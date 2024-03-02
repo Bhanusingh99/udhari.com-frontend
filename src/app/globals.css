@@ -7,13 +7,13 @@
     @apply text-[.9rem] font-semibold text-center border border-black py-2 px-6 rounded-[1.5rem] hover:bg-black hover:text-white hover:border-white duration-200;
   }
   .home_page_card_css{
-    @apply flex flex-col items-center border bg-[#f4ecd7] w-32 h-28 py-2 px-4 max-md:h-24 max-md:w-28
+    @apply flex flex-col items-center border bg-white w-32 h-28 py-2 px-4 max-md:h-24 max-md:w-28
   }
   .bg_light_color {
-    @apply bg-[#f4ecd7]
+    @apply bg-white
   }
   .text-light{
-    @apply text-[#f4ecd7]
+    @apply text-white
   }
 }
 
@@ -23,7 +23,7 @@
 
 
 .app-footer__marquee {
-  color: #f4ecd7;
+  color: white;
   backdrop-filter: blur(4px);
   font-size: calc(0.8925rem + 6.43571vw);
   font-weight: 400;

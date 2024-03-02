@@ -38,7 +38,7 @@ const ForgotPassword = () => {
       const res = await api.post("/v1/api/update-password",formData);
       console.log(res.data.success);
       if(res.data.success){
-        route.push("/")
+        route.push("/log-in")
       }
     };
 

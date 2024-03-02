@@ -1,13 +1,16 @@
+'use client'
 import { AlignRight } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import MobileNavbar from './MobileNavbar'
+import { usePathname } from 'next/navigation'
 
 const Navbar = () => {
+
   return (
-    <div className='px-8 py-3 rounded-[30px] bg-[#f4ecd7] flex items-center w-[80%]
-     h-[3.2rem] mt-5 ml-36 max-lg:mx-auto max-lg:w-[90%] justify-between'>
+    <div className={`px-8 py-3 rounded-[30px] fixed bg-white flex items-center w-[80%]
+     h-[3.2rem] top-2 z-10 ml-36 max-lg:mx-auto max-lg:w-[90%] justify-between`}>
         <Link href={"/"}>
         <div className='flex gap-1 items-end'>
             <Image src={'/icons/money.png'} height={30} width={30} alt='logo'/>
@@ -20,7 +23,7 @@ const Navbar = () => {
                 <p>Home</p>
             </Link>
 
-            <Link href={"/product"} className='text-[.9rem] font-semibold'>
+            <Link href={"/dashboard"} className='text-[.9rem] font-semibold'>
                 <p>Product</p>
             </Link>
 
