@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import React from 'react'
 
 const LandingPage = () => {
@@ -21,7 +22,9 @@ const LandingPage = () => {
         </div>
 
         <div className="flex w-full gap-6 mt-8">
+          <Link href={'/sign-up'}>
             <button className="py-2.5 px-6 bg_light_color font-semibold">Get started</button>
+          </Link>
             <button className="py-2.5 px-6 border text-white font-semibold">Introduction</button>
         </div>
 

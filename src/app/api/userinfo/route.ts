@@ -9,10 +9,9 @@ export async function GET(request: NextRequest) {
             throw new Error('Token not found in cookies');
         }
 
-        const payload = await jwt.verify(cookie, process.env.JWT_SECRET_KEY!);
 
         return NextResponse.json({
-            payload,
+            cookie,
         });
     } catch (error) {
         return NextResponse.json({

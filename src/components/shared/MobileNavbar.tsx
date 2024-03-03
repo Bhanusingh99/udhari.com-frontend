@@ -11,23 +11,38 @@ import axios from "axios";
 import { AlignRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 
 const MobileNavbar = () => {
+  const router = useRouter()
   const [id,setId] = useState("");
 
-  const getUserInfo = async() => {
+  useEffect(() => {
+    const getUserInfo = async() => {
+      try {
+        const res = await axios.get("/api/userinfo");
+        setId(res.data.cookie)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    getUserInfo()
+  },[])
+
+  const handleLogout = async () =>{
     try {
-      const res = await axios.get("/api/userinfo");
-      console.log(res.data)
-      setId(res.data.payload.id)
-      console.log(id)
+      const res = await axios.get('/api/log-out')
+      console.log('User successfully logged-out')
+
+      if(res.data.success){
+        router.push('/')
+      }
     } catch (error) {
       console.log(error)
     }
   }
-  getUserInfo()
 
   return (
     <div>
@@ -68,9 +83,9 @@ const MobileNavbar = () => {
                     <p>LOG-IN</p>
                 </Link>
 
-                <Link href={"/log-out"} className='mobile_navbar_btn shadowcss'>
+                <button className={`mobile_navbar_btn shadowcss ${id ? "" : "hidden"}`} onClick={() => handleLogout()}>
                     <p>LOG-OUT</p>
-                </Link>
+                </button>
                 
                 <Link href={"/profile"} className='mobile_navbar_btn shadowcss'>
                     <p>PROFILE</p>
