@@ -22,7 +22,7 @@ export function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     '/profile',
-    '/dashboard',
+    '/dashboard/customer',
     '/change-password',
     '/sign-up',
     '/log-in'

@@ -23,7 +23,8 @@ const MobileNavbar = () => {
     const getUserInfo = async() => {
       try {
         const res = await axios.get("/api/userinfo");
-        setId(res.data.cookie)
+        setId(res.data);
+        console.log(id)
       } catch (error) {
         console.log(error)
       }

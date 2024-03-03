@@ -43,20 +43,20 @@ const Sign_Up = () => {
 
 
   return (
-    <div className="w-[80%] mb-16 bg-white flex mx-auto border overflow-hidden mt-20 max-md:w-[90%]">
-        <div className="w-[40%] max-lg:hidden">
+    <div className="w-[80%] mb-24 bg-white flex mx-auto border overflow-hidden mt-28 max-md:w-[90%]">
+        <div className="w-[45%] max-lg:hidden">
         <Image
             src={"/icons/sign_up_last.jpg"}
             width={600}
             height={400}
             alt="sign-up"
-            className="p object-cover w-[500px] h-[620px]"
+            className="p object-cover w-[500px] h-[610px]"
         />
         </div>
 
 
-         <div className="w-[60%] max-md:w-full max-md:p-2">
-            <div className="min-w-full h-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
+         <div className="w-[55%] max-md:w-full max-md:p-2 mt-2">
+            <div className="min-w-full h-full bg-white rounded-lg md:mt-0 sm:max-w-md xl:p-0">
               <div className=" space-y-4 md:space-y-6 sm:p-8 mt-[-2rem] max-md:mt-0">
                 <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
                   Create an account
@@ -180,7 +180,7 @@ const Sign_Up = () => {
                   </div>
                   <button
                   onClick={(e)=>handleSubmit(e)}
-                    className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 bg-black text-center "
+                    className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2 bg-black text-center "
                   >
                     Create an account
                   </button>

@@ -36,24 +36,21 @@ const LogIn = () => {
   };
 
   return (
-    <div className="w-[80%] mb-10 bg-white flex mx-auto border overflow-hidden mt-16">
+    <div className="w-[70%] mb-20 bg-white flex mx-auto border overflow-hidden mt-32">
         <div className="w-[45%] max-md:hidden">
         <Image
             src={"/icons/sign_up_last.jpg"}
             width={700}
             height={400}
             alt="sign-up"
-            className="p object-cover"
+            className=" h-[450px] w-[420px]"
         />
         </div>
 
 
    
        <div className="w-[55%] max-md:w-full">
-            <Link href={'/'} className="flex justify-center items-center mt-10">
-                <Image src={'/icons/money.png'} height={70} width={70} alt="logo" />
-            </Link>
-          <div className="p-6 space-y-4 md:space-y-6 sm:p-8 mt-10">
+          <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               Sign in to your account
             </h1>
