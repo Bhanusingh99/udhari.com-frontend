@@ -11,10 +11,84 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import CustomerCard from "@/components/shared/CustomerCard";
+import { getRandomColor } from "@/helper/getRandomColor";
 
 const arr = [
+  {
+    name: "Bhanu Singh",
+    money: 1222,
+    id: 1,
+    form: "GET",
+    time: "9 Hours ago",
+  },
+  {
+    name: "Abhsihek Chaudhry",
+    money: 6969,
+    id: 2,
+    form: "GIVE",
+    time: "2 days ago",
+  },
+  {
+    name: "John Doe",
+    money: 500,
+    id: 3,
+    form: "GET",
+    time: "1 day ago",
+  },
+  {
+    name: "Alice Johnson",
+    money: 1500,
+    id: 4,
+    form: "GIVE",
+    time: "3 hours ago",
+  },
+  {
+    name: "Eva Smith",
+    money: 300,
+    id: 5,
+    form: "GET",
+    time: "4 days ago",
+  },
+  {
+    name: "Michael Brown",
+    money: 800,
+    id: 6,
+    form: "GIVE",
+    time: "12 hours ago",
+  },
+  {
+    name: "Sara Wilson",
+    money: 2500,
+    id: 7,
+    form: "GET",
+    time: "6 days ago",
+  },
+  {
+    name: "Chris Harris",
+    money: 1200,
+    id: 8,
+    form: "GIVE",
+    time: "1 week ago",
+  },
+  {
+    name: "Emma Taylor",
+    money: 1800,
+    id: 9,
+    form: "GET",
+    time: "2 weeks ago",
+  },
+  {
+    name: "Ryan Miller",
+    money: 3000,
+    id: 10,
+    form: "GIVE",
+    time: "5 days ago",
+  },
+];
 
-]
+console.log(arr);
+
 
 const DashboardCustome = () => {
   const param = usePathname();
@@ -117,15 +191,20 @@ const DashboardCustome = () => {
           className="w-full h-[22rem] px-4 py-4 border-b-[1px] 
       border-[#888] overflow-y-scroll"
         >
-          <div className="w-full h-16 bg-blue-600 my-3"></div>
-          <div className="w-full h-16 bg-blue-600 my-3"></div>
-          <div className="w-full h-16 bg-blue-600 my-3"></div>
-          <div className="w-full h-16 bg-blue-600 my-3"></div>
-          <div className="w-full h-16 bg-blue-600 my-3"></div>
-          <div className="w-full h-16 bg-blue-600 my-3"></div>
-          <div className="w-full h-16 bg-blue-600 my-3"></div>
-          <div className="w-full h-16 bg-blue-600 my-3"></div>
-          <div className="w-full h-16 bg-blue-600 my-3"></div>
+       {          
+       arr.map((items) => {
+        const color =  getRandomColor()
+       return( <CustomerCard
+          key={items.id}
+          color={color}
+          name={items.name}
+          time={items.time}
+          form={items.form}
+          money={items.money}
+          />
+       )
+       })
+       }
         </div>
 
         <div className="w-full flex justify-center py-2.5">
@@ -133,15 +212,12 @@ const DashboardCustome = () => {
         </div>
       </div>
 
-      {arr.length === 0 ? <div className='w-[45%] h-full bg-[#222]'>
+    <div className='w-[45%] h-full bg-[#222]'>
       <div className='w-full h-full flex justify-center items-center flex-col'>
         <Users size={125} color="white"/>
         <p className="text-[1.5rem] text-white">No customer selected</p>
       </div>
-  </div> :
-  <div className='w-[45%] h-full bg-[#222]'>
-
-  </div>}
+    </div>
     </div>
   );
 };
