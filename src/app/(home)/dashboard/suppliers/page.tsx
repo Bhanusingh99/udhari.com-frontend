@@ -1,6 +1,6 @@
 'use client'
 import AddSuppliers from '@/components/shared/AddSuppliers';
-import { ClipboardPlus, MoveDownLeft, MoveUpRight, Plus, Search } from 'lucide-react';
+import { ClipboardPlus, MoveDownLeft, MoveUpRight, Plus, Search, Users } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React from 'react'
@@ -11,6 +11,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+
+const arr = [
+
+]
 
 const DashboardSupplier = () => {
     const param = usePathname();
@@ -46,7 +50,7 @@ const DashboardSupplier = () => {
 
       <div className="w-full h-28 border-b-[1px] border-[#888] flex justify-around items-center">
           <div>
-            <p className="text-white my-1">Search for suppliers</p>
+            <p className="text-white my-1 text-[.9rem]">Search for suppliers</p>
             <div className="flex items-center justify-center border-[1px] border-[#777] px-4 rounded-xl">
             <Search color="#999" size={17}/>
             <input type="search" placeholder="name or number" className="py-1.5 px-2 bg-transparent outline-none text-white"/>
@@ -54,7 +58,7 @@ const DashboardSupplier = () => {
           </div>
 
           <div>
-            <p className="text-white my-1">Filter By</p>
+            <p className="text-white my-1 text-[.9rem]">Filter By</p>
             <div>
               <Select>
                 <SelectTrigger className="w-[120px] text-white rounded-xl border-[1px] border-[#777]">
@@ -70,7 +74,7 @@ const DashboardSupplier = () => {
           </div>
 
           <div>
-            <p className="text-white my-1">Sort By</p>
+            <p className="text-white my-1 text-[.9rem]">Sort By</p>
             <div>
               <Select>
                 <SelectTrigger className="w-[120px] text-white rounded-xl border-[1px] border-[#777]">
@@ -97,9 +101,17 @@ const DashboardSupplier = () => {
       </div>
   </div>
 
+  {arr.length === 0 ? <div className='w-[45%] h-full bg-[#222]'>
+      <div className='w-full h-full flex justify-center items-center flex-col'>
+        <Users size={125} color="white"/>
+        <p className="text-[1.5rem] text-white">No supplier selected</p>
+      </div>
+  </div> :
   <div className='w-[45%] h-full bg-[#222]'>
 
-  </div>
+  </div>}
+
+
 </div>
 
   )

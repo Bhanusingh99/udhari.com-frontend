@@ -1,6 +1,6 @@
 "use client";
 import Addcutomer from "@/components/shared/Addcutomer";
-import { ClipboardPlus, MoveDownLeft, MoveUpRight, Search } from "lucide-react";
+import { ClipboardPlus, MoveDownLeft, MoveUpRight, Search, Users } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
@@ -11,6 +11,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+
+const arr = [
+
+]
 
 const DashboardCustome = () => {
   const param = usePathname();
@@ -69,7 +73,7 @@ const DashboardCustome = () => {
 
         <div className="w-full h-28 border-b-[1px] border-[#888] flex justify-around items-center">
           <div>
-            <p className="text-white my-1">Search for customers</p>
+            <p className="text-white my-1 text-[.9rem]">Search for customers</p>
             <div className="flex items-center justify-center border-[1px] border-[#777] px-4 rounded-xl">
             <Search color="#999" size={17}/>
             <input type="search" placeholder="name or number" className="py-1.5 px-2 bg-transparent outline-none text-white"/>
@@ -77,7 +81,7 @@ const DashboardCustome = () => {
           </div>
 
           <div>
-            <p className="text-white my-1">Filter By</p>
+            <p className="text-white my-1 text-[.9rem]">Filter By</p>
             <div>
               <Select>
                 <SelectTrigger className="w-[120px] text-white rounded-xl border-[1px] border-[#777]">
@@ -93,7 +97,7 @@ const DashboardCustome = () => {
           </div>
 
           <div>
-            <p className="text-white my-1">Sort By</p>
+            <p className="text-white my-1 text-[.9rem]">Sort By</p>
             <div>
               <Select>
                 <SelectTrigger className="w-[120px] text-white rounded-xl border-[1px] border-[#777]">
@@ -112,14 +116,32 @@ const DashboardCustome = () => {
         <div
           className="w-full h-[22rem] px-4 py-4 border-b-[1px] 
       border-[#888] overflow-y-scroll"
-        ></div>
+        >
+          <div className="w-full h-16 bg-blue-600 my-3"></div>
+          <div className="w-full h-16 bg-blue-600 my-3"></div>
+          <div className="w-full h-16 bg-blue-600 my-3"></div>
+          <div className="w-full h-16 bg-blue-600 my-3"></div>
+          <div className="w-full h-16 bg-blue-600 my-3"></div>
+          <div className="w-full h-16 bg-blue-600 my-3"></div>
+          <div className="w-full h-16 bg-blue-600 my-3"></div>
+          <div className="w-full h-16 bg-blue-600 my-3"></div>
+          <div className="w-full h-16 bg-blue-600 my-3"></div>
+        </div>
 
         <div className="w-full flex justify-center py-2.5">
           <Addcutomer />
         </div>
       </div>
 
-      <div className="w-[45%] h-full bg-[#222]"></div>
+      {arr.length === 0 ? <div className='w-[45%] h-full bg-[#222]'>
+      <div className='w-full h-full flex justify-center items-center flex-col'>
+        <Users size={125} color="white"/>
+        <p className="text-[1.5rem] text-white">No customer selected</p>
+      </div>
+  </div> :
+  <div className='w-[45%] h-full bg-[#222]'>
+
+  </div>}
     </div>
   );
 };
