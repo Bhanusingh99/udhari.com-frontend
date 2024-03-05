@@ -3,7 +3,7 @@ import Addcutomer from "@/components/shared/Addcutomer";
 import { ClipboardPlus, MoveDownLeft, MoveUpRight, Search, Users } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -13,84 +13,107 @@ import {
 } from "@/components/ui/select";
 import CustomerCard from "@/components/shared/CustomerCard";
 import { getRandomColor } from "@/helper/getRandomColor";
+import axios from "axios";
+import { sortObjectsDescending } from "@/helper/filters";
 
-const arr = [
-  {
-    name: "Bhanu Singh",
-    money: 1222,
-    id: 1,
-    form: "GET",
-    time: "9 Hours ago",
-  },
-  {
-    name: "Abhsihek Chaudhry",
-    money: 6969,
-    id: 2,
-    form: "GIVE",
-    time: "2 days ago",
-  },
-  {
-    name: "John Doe",
-    money: 500,
-    id: 3,
-    form: "GET",
-    time: "1 day ago",
-  },
-  {
-    name: "Alice Johnson",
-    money: 1500,
-    id: 4,
-    form: "GIVE",
-    time: "3 hours ago",
-  },
-  {
-    name: "Eva Smith",
-    money: 300,
-    id: 5,
-    form: "GET",
-    time: "4 days ago",
-  },
-  {
-    name: "Michael Brown",
-    money: 800,
-    id: 6,
-    form: "GIVE",
-    time: "12 hours ago",
-  },
-  {
-    name: "Sara Wilson",
-    money: 2500,
-    id: 7,
-    form: "GET",
-    time: "6 days ago",
-  },
-  {
-    name: "Chris Harris",
-    money: 1200,
-    id: 8,
-    form: "GIVE",
-    time: "1 week ago",
-  },
-  {
-    name: "Emma Taylor",
-    money: 1800,
-    id: 9,
-    form: "GET",
-    time: "2 weeks ago",
-  },
-  {
-    name: "Ryan Miller",
-    money: 3000,
-    id: 10,
-    form: "GIVE",
-    time: "5 days ago",
-  },
-];
-
-console.log(arr);
+// const arr = [
+//   {
+//     name: "Bhanu Singh",
+//     money: 1222,
+//     id: 1,
+//     form: "GET",
+//     time: "9 Hours ago",
+//   },
+//   {
+//     name: "Abhsihek Chaudhry",
+//     money: 6969,
+//     id: 2,
+//     form: "GIVE",
+//     time: "2 days ago",
+//   },
+//   {
+//     name: "John Doe",
+//     money: 500,
+//     id: 3,
+//     form: "GET",
+//     time: "1 day ago",
+//   },
+//   {
+//     name: "Alice Johnson",
+//     money: 1500,
+//     id: 4,
+//     form: "GIVE",
+//     time: "3 hours ago",
+//   },
+//   {
+//     name: "Eva Smith",
+//     money: 300,
+//     id: 5,
+//     form: "GET",
+//     time: "4 days ago",
+//   },
+//   {
+//     name: "Michael Brown",
+//     money: 800,
+//     id: 6,
+//     form: "GIVE",
+//     time: "12 hours ago",
+//   },
+//   {
+//     name: "Sara Wilson",
+//     money: 2500,
+//     id: 7,
+//     form: "GET",
+//     time: "6 days ago",
+//   },
+//   {
+//     name: "Chris Harris",
+//     money: 1200,
+//     id: 8,
+//     form: "GIVE",
+//     time: "1 week ago",
+//   },
+//   {
+//     name: "Emma Taylor",
+//     money: 1800,
+//     id: 9,
+//     form: "GET",
+//     time: "2 weeks ago",
+//   },
+//   {
+//     name: "Ryan Miller",
+//     money: 3000,
+//     id: 10,
+//     form: "GIVE",
+//     time: "5 days ago",
+//   },
+// ];
 
 
 const DashboardCustome = () => {
+  const[totalCash,setTotalCash] = useState();
+  const[totalCredit,setTotalCredit] = useState();
+  const [arr, setArr] = useState<{ name: string; time: string; form: string; money: number }[]>([]);
+
+  const getAllCustomers = async () => {
+    try {
+      const res = await axios.get("http://localhost:4000/v1/api/total-customers-transactions");
+      console.log(res.data.data.transactions)
+      setArr(res.data.data.transactions)
+      setTotalCash(res.data.data.totalCash)
+      setTotalCredit(res.data.data.totalCredit)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    getAllCustomers()
+    console.log(arr)
+  },[])
+
+  // sortObjectsDescending(arr);
+
   const param = usePathname();
   return (
     <div className="w-full h-full bg-green-500 flex">
@@ -121,16 +144,16 @@ const DashboardCustome = () => {
         <div className="w-full h-16 border-b-[1px] border-[#888] flex justify-around items-center">
           <div className="flex justify-center items-end gap-1">
             <p className="text-white">
-              You'll Give:{" "}
-              <span className="font-semibold text-green-600">166</span>
+              Total Cash:{" "}
+              <span className="font-semibold text-green-600">{totalCash}</span>
             </p>
             <MoveUpRight color="green" size={20} strokeWidth={2.5} />
           </div>
 
           <div className="flex justify-center items-center gap-1">
             <p className="text-white">
-              You'll Get:{" "}
-              <span className="font-semibold text-red-600">200</span>
+              Credit Remain:{" "}
+              <span className="font-semibold text-red-600">{totalCredit}</span>
             </p>
             <MoveDownLeft color="red" size={20} strokeWidth={2.5} />
           </div>
@@ -191,15 +214,16 @@ const DashboardCustome = () => {
           className="w-full h-[22rem] px-4 py-4 border-b-[1px] 
       border-[#888] overflow-y-scroll"
         >
-       {          
-       arr.map((items) => {
+       {   
+       arr.length === 0 ? "":       
+       arr.map((items,index) => {
         const color =  getRandomColor()
        return( <CustomerCard
-          key={items.id}
+          key={index}
           color={color}
-          name={items.name}
-          time={items.time}
-          form={items.form}
+          name={items.name}//@ts-ignore
+          time={items.date}//@ts-ignore
+          form={items.transactionType}
           money={items.money}
           />
        )

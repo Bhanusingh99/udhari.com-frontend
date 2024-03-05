@@ -18,7 +18,7 @@ const CustomerCard: React.FC<Props> = ({ name, time, money, form,color }: Props)
     }
 
     const logo = concatenateFirstLetters(name);
-    const val = money / 100;
+    const val = money;
 
     return (
         <div className="w-full flex justify-between my-5">
@@ -38,10 +38,10 @@ const CustomerCard: React.FC<Props> = ({ name, time, money, form,color }: Props)
                     <IndianRupee size={16} /> <span>{val}</span>
                 </p>
                 {
-                    form === "GET" ? <p className={`text-green-500 text-[.9rem]`}>
-                    YOU'LL GET
+                    form === "CASH" ? <p className={`text-green-500 text-[.9rem]`}>
+                    CASH
                    </p> : <p className={`text-red-600 text-[.9rem]`}>
-                    YOU'LL GIVE
+                    CREDIT
                    </p>
                 }
                 
