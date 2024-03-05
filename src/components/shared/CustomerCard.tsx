@@ -1,27 +1,24 @@
+import { concatenateFirstLetters } from '@/helper/getNamelater';
 import { IndianRupee } from 'lucide-react';
 import React from 'react';
 
 interface Props {
+    id: string; // Add id property
     name: string;
     time: string;
     money: number;
     form: string;
-    color: string; // Change "String" to "string"
+    color: string;
+    onClick?: () => void;
 }
 
-
-const CustomerCard: React.FC<Props> = ({ name, time, money, form,color }: Props) => {
-    function concatenateFirstLetters(fullName: string): string {
-        const words = fullName.split(' ');
-        const firstLetters = words.map(word => word.charAt(0).toUpperCase());
-        return firstLetters.join('');
-    }
+const CustomerCard: React.FC<Props> = ({ id, name, time, money, form, color, onClick }: Props) => {
 
     const logo = concatenateFirstLetters(name);
     const val = money;
 
     return (
-        <div className="w-full flex justify-between my-5">
+        <div className="w-full flex justify-between my-4 cursor-pointer" onClick={onClick}>
             <div className="flex gap-4">
                 <div className={`w-10 h-10 rounded-full ${color} flex justify-center items-center`}>
                     <h1 className="text-[1rem] text-white">{logo}</h1>
@@ -33,7 +30,7 @@ const CustomerCard: React.FC<Props> = ({ name, time, money, form,color }: Props)
                 </div>
             </div>
 
-            <div>
+            <div className='flex flex-col justify-end items-end'>
                 <p className="flex justify-center items-center text-white">
                     <IndianRupee size={16} /> <span>{val}</span>
                 </p>
@@ -44,7 +41,6 @@ const CustomerCard: React.FC<Props> = ({ name, time, money, form,color }: Props)
                     CREDIT
                    </p>
                 }
-                
             </div>
         </div>
     );

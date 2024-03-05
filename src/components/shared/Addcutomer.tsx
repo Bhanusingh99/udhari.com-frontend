@@ -8,15 +8,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
-
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 interface Props {
   label: string;
@@ -26,11 +19,19 @@ interface Props {
   onChange: (value: string) => void;
 }
 
-const InputField = ({ label, placeholder, optional = false, value, onChange }: Props) => (
+const InputField = ({
+  label,
+  placeholder,
+  optional = false,
+  value,
+  onChange,
+}: Props) => (
   <div className="w-full">
     <div className="w-full flex justify-between">
       <span className="py-1 text-[#333] text-[1.05rem]">{label}</span>
-      {optional && <span className="py-1 text-[#333] text-[1.05rem]">(optional)</span>}
+      {optional && (
+        <span className="py-1 text-[#333] text-[1.05rem]">(optional)</span>
+      )}
     </div>
     <input
       placeholder={`${placeholder}`}
@@ -45,34 +46,69 @@ const InputField = ({ label, placeholder, optional = false, value, onChange }: P
 // ... (other imports)
 
 const Addcutomer = () => {
+  const router = useRouter()
   const [name, setName] = useState("");
   const [mode, setMode] = useState("");
   const [description, setDescription] = useState("");
   const [money, setMoney] = useState("");
   const [number, setNumber] = useState("");
 
+  const [selectedValue, setSelectedValue] = useState(null);
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
+
+  const dropdownItems = ["CASH", "CREDIT"];
+
+  const handleDropdownToggle = () => {
+    setDropdownOpen(!isDropdownOpen);
+  };
+
+  const handleItemClick = (value: any) => {
+    setSelectedValue(value);
+    setDropdownOpen(false);
+  };
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    console.log(name,mode,description,money,number);
+
+    const data ={
+      customerName:name,
+      number,
+      money,
+      description:description,
+      transactionType:selectedValue
+    }
+
+    try {
+    const res = await axios.post("http://localhost:4000/v1/api/create-customer",data);
+    console.log(res);
+    if(res.statusText === "Created"){
+      window.location.reload();
+    }
+    } catch (error) {
+      console.log(error)
+    }
+
   };
 
   return (
     <div>
       <Sheet>
-      <SheetTrigger>
-        <p className="w-full py-2 px-6 bg-white
-        text-black flex gap-1 items-center justify-center">
-          <Plus />
-          Add Customer</p>
-      </SheetTrigger>
+        <SheetTrigger>
+          <p
+            className="w-full py-2 px-6 bg-white
+        text-black flex gap-1 items-center justify-center"
+          >
+            <Plus />
+            Add Customer
+          </p>
+        </SheetTrigger>
         <SheetContent className="bg-white">
           <SheetHeader className="flex justify-around items-between">
-          <SheetTitle className="mb-4">Add customer</SheetTitle>
+            <SheetTitle className="mb-4">Add customer</SheetTitle>
             <SheetDescription className="my-4">
-            <InputField
+              <InputField
                 label="Name"
                 placeholder="Bhanu singh"
-                optional
                 value={name}
                 onChange={(value) => setName(value)}
               />
@@ -87,31 +123,48 @@ const Addcutomer = () => {
               <InputField
                 label="Number"
                 placeholder="999999999"
-                optional
                 value={number}
                 onChange={(value) => setNumber(value)}
               />
               <InputField
                 label="money"
                 placeholder="0"
-                optional
                 value={money}
                 onChange={(value) => setMoney(value)}
               />
 
               <div className="w-full mb-6">
-                <Select>
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="MODE" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-[#222] text-white">
-                    <SelectItem value="light" onClick={() => {setMode("CASH")}}>CASH</SelectItem>
-                    <SelectItem value="dark" onClick={() => {setMode("CREDIT")}}>CREDIT</SelectItem>
-                  </SelectContent>
-                </Select>
+                <div className="dropdown w-full py-2 px-4 border">
+                  <button
+                    onClick={handleDropdownToggle}
+                    className={`dropdown-toggle px-2 py-1 ${selectedValue === 'CASH'?"text-green-500":`text-red-500`}`}
+                  >
+                    {selectedValue || "Select an item"}
+                  </button>
+                  {isDropdownOpen && (
+                    <ul className="dropdown-menu w-full">
+                      {dropdownItems.map((item, index) => (
+                        <li
+                          key={index}
+                          onClick={() => handleItemClick(item)}
+                          className={`text-black cursor-pointer mt-1 border py-2 px-2 ${
+                            item === "CASH" ? "text-green-500" : "text-red-500"
+                          }`}
+                        >
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
               </div>
             </SheetDescription>
-            <p onClick={(e) => handleSubmit(e)} className="py-2 px-4 bg-black text-white mt-4">Add customer</p>
+            <p
+              onClick={(e) => handleSubmit(e)}
+              className="py-2 px-4 bg-black text-white mt-4 flex items-center justify-center"
+            >
+              Add Customer
+            </p>
           </SheetHeader>
         </SheetContent>
       </Sheet>
@@ -120,4 +173,3 @@ const Addcutomer = () => {
 };
 
 export default Addcutomer;
-

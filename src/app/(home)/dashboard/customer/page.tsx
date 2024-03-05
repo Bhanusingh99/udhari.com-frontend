@@ -14,92 +14,40 @@ import {
 import CustomerCard from "@/components/shared/CustomerCard";
 import { getRandomColor } from "@/helper/getRandomColor";
 import axios from "axios";
-import { sortObjectsDescending } from "@/helper/filters";
+import { sortedTransactions } from "@/helper/filters";
+import SelectedUser from "@/components/shared/SelectedUser";
 
-// const arr = [
-//   {
-//     name: "Bhanu Singh",
-//     money: 1222,
-//     id: 1,
-//     form: "GET",
-//     time: "9 Hours ago",
-//   },
-//   {
-//     name: "Abhsihek Chaudhry",
-//     money: 6969,
-//     id: 2,
-//     form: "GIVE",
-//     time: "2 days ago",
-//   },
-//   {
-//     name: "John Doe",
-//     money: 500,
-//     id: 3,
-//     form: "GET",
-//     time: "1 day ago",
-//   },
-//   {
-//     name: "Alice Johnson",
-//     money: 1500,
-//     id: 4,
-//     form: "GIVE",
-//     time: "3 hours ago",
-//   },
-//   {
-//     name: "Eva Smith",
-//     money: 300,
-//     id: 5,
-//     form: "GET",
-//     time: "4 days ago",
-//   },
-//   {
-//     name: "Michael Brown",
-//     money: 800,
-//     id: 6,
-//     form: "GIVE",
-//     time: "12 hours ago",
-//   },
-//   {
-//     name: "Sara Wilson",
-//     money: 2500,
-//     id: 7,
-//     form: "GET",
-//     time: "6 days ago",
-//   },
-//   {
-//     name: "Chris Harris",
-//     money: 1200,
-//     id: 8,
-//     form: "GIVE",
-//     time: "1 week ago",
-//   },
-//   {
-//     name: "Emma Taylor",
-//     money: 1800,
-//     id: 9,
-//     form: "GET",
-//     time: "2 weeks ago",
-//   },
-//   {
-//     name: "Ryan Miller",
-//     money: 3000,
-//     id: 10,
-//     form: "GIVE",
-//     time: "5 days ago",
-//   },
-// ];
 
+interface Transaction {
+  name: string;
+  id: string;
+  date: string;
+  sortingDate: string;
+  money: number;
+  transactionType: string;
+}
 
 const DashboardCustome = () => {
+  const [userSelected,setuserSelected] = useState("") 
   const[totalCash,setTotalCash] = useState();
   const[totalCredit,setTotalCredit] = useState();
   const [arr, setArr] = useState<{ name: string; time: string; form: string; money: number }[]>([]);
+
+  const sortedTransactions = (transactions: Transaction[]) => {
+    return transactions.sort((a, b) => {
+      const dateA = new Date(a.sortingDate);
+      const dateB = new Date(b.sortingDate);
+
+      return dateB.getTime() - dateA.getTime();
+    });
+  };
 
   const getAllCustomers = async () => {
     try {
       const res = await axios.get("http://localhost:4000/v1/api/total-customers-transactions");
       console.log(res.data.data.transactions)
-      setArr(res.data.data.transactions)
+      //@ts-ignore
+      setArr(sortedTransactions(res.data.data.transactions))
       setTotalCash(res.data.data.totalCash)
       setTotalCredit(res.data.data.totalCredit)
     } catch (error) {
@@ -112,7 +60,11 @@ const DashboardCustome = () => {
     console.log(arr)
   },[])
 
-  // sortObjectsDescending(arr);
+  const handleCustomerCardClick = (customerId: string) => {
+    // Set the userSelected state when a CustomerCard is clicked
+    setuserSelected(customerId);
+    console.log(userSelected)
+  };
 
   const param = usePathname();
   return (
@@ -218,13 +170,16 @@ const DashboardCustome = () => {
        arr.length === 0 ? "":       
        arr.map((items,index) => {
         const color =  getRandomColor()
-       return( <CustomerCard
+       return( 
+       <CustomerCard
           key={index}
-          color={color}
+          color={color}//@ts-ignore
+          id={items.id}
           name={items.name}//@ts-ignore
           time={items.date}//@ts-ignore
           form={items.transactionType}
-          money={items.money}
+          money={items.money}//@ts-ignore
+          onClick={() => handleCustomerCardClick(items.id)}
           />
        )
        })
@@ -237,10 +192,15 @@ const DashboardCustome = () => {
       </div>
 
     <div className='w-[45%] h-full bg-[#222]'>
-      <div className='w-full h-full flex justify-center items-center flex-col'>
+      {
+        userSelected 
+        ? <SelectedUser value={userSelected}/> 
+        :<div className='w-full h-full flex justify-center items-center flex-col'>
         <Users size={125} color="white"/>
         <p className="text-[1.5rem] text-white">No customer selected</p>
-      </div>
+       </div>
+      }
+
     </div>
     </div>
   );
