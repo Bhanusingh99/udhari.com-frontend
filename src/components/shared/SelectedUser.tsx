@@ -4,6 +4,7 @@ import axios from "axios";
 import { Settings } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import CustomerSetting from "./CustomerSetting";
+import SelectedCustomerHistory from "./SelectedCustomerHistory";
 
 // Define the type for user data
 interface UserData {
@@ -13,7 +14,7 @@ interface UserData {
   description: string;
   money: number;
   transactionType: string;
-  createdAt: string;
+  createdAt: string | Date;
   updatedAt: string;
   __v: number;
 }
@@ -26,6 +27,7 @@ interface Props {
 
 const SelectedUser = ({ value }: Props) => {
   const [userinfo, setUserInfo] = useState<UserData | null>(null); // Use the defined type
+  const [userTransactionHistory,setUserTransactionHistory] = useState<UserData[]>([]);
 
   const data = {
     id: value,
@@ -42,10 +44,18 @@ const SelectedUser = ({ value }: Props) => {
         );
         const userData: UserData = response.data.user;
         setUserInfo(userData);
+    
+        // Check if userinfo is not null before accessing properties
+        if (userinfo) {
+          const userHistory = await axios.post("http://localhost:4000/v1/api/get-selected-customer-history", data);
+          setUserTransactionHistory(userHistory.data.data.transactions.transactionHistory);
+          console.log(userTransactionHistory)
+        }
       } catch (error) {
         console.log(error);
       }
     };
+    
 
     getUser();
   }, [value]); // Include 'value' as a dependency if it's used inside the effect
@@ -82,14 +92,42 @@ const SelectedUser = ({ value }: Props) => {
             </div>
           </div>
 
-          <div className="w-full border-b-[1px]
+          <div className="w-full
           py-2 px-4 text-white flex flex-col items-start">
                 <p>NET BALANCE</p>
-                <p className={`${userinfo.transactionType === "CASH" ? "text-green-500" : "text-red-600"}`}>{userinfo.money}</p>
+                <p className="text-white text-[.9rem]">{userinfo.customerName}
+                  <span>{userinfo.transactionType === "CASH" ? " Gave " : " will Give "}</span>
+                  <span className={`${userinfo.transactionType === "CASH" ? "text-green-500" : "text-red-600"}`}>
+                    {userinfo.money}
+                  </span>
+                </p>
           </div>
 
-          <div className="w-full border-b-2 h-20 mt-16"></div>
-          <div className="w-full border-b-2 h-20 mt-16"></div>
+          <div className="w-full border-b-[1px] border-[#888] h-20 py-2 mt-0.5 px-4 flex justify-between items-center">
+            <div className="text-[#888] text-[.9rem]">ENTREIS</div>
+            <div className="flex gap-12 items-center">
+            <div className="text-[#888] text-[.9rem]">YOU GOT</div>
+            <div className="text-[#888] text-[.9rem]">YOU GAVE</div>
+            </div>
+          </div>
+
+          <div className="w-full border-b-[1px] border-[#888] h-[22rem] py-2 overflow-y-scroll">
+              {userTransactionHistory.map((items)=>(
+                  <SelectedCustomerHistory
+                  key={items._id}
+                  time={items.createdAt}
+                  money={items.money}
+                  description={items.description}
+                  form={items.transactionType}
+                  />
+              ))}
+          </div>
+
+          <div className="w-full py-3 px-4 flex items-center justify-between">
+            <p className="py-2 px-2 bg-white text-green-500 font-semibold rounded-xl w-[45%] flex ite justify-center cursor-pointer hover:bg-green-500 hover:text-white duration-200">GET CASH</p>
+            <p className="py-2 px-2 bg-white text-red-500 font-semibold rounded-xl w-[45%] flex ite justify-center cursor-pointer hover:bg-red-500 hover:text-white duration-200">GIVE MORE CREDIT</p>
+          </div>
+
         </div>
       ) : (
         <p>Loading...</p>
