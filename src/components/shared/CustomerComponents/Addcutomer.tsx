@@ -95,10 +95,10 @@ const Addcutomer = () => {
       <Sheet>
         <SheetTrigger>
           <p
-            className="w-full py-2 px-6 bg-white
-        text-black flex gap-1 items-center justify-center"
+            className="w-full py-2 px-6 bg-green-500
+        text-white flex items-center justify-center font-semibold"
           >
-            <Plus />
+            <Plus size={22}/>
             Add Customer
           </p>
         </SheetTrigger>
@@ -161,7 +161,7 @@ const Addcutomer = () => {
             </SheetDescription>
             <p
               onClick={(e) => handleSubmit(e)}
-              className="py-2 px-4 bg-black text-white mt-4 flex items-center justify-center"
+              className="py-2 px-4 bg-green-500 border-[1px] border-black text-white mt-4 flex items-center justify-center"
             >
               Add Customer
             </p>

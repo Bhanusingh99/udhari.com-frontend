@@ -1,4 +1,4 @@
-import CreditCardSection from "@/components/shared/CreditCardSection";
+import CreditCardSection from "@/components/shared/CustomerComponents/CreditCardSection";
 import HomeScrollEffect from "@/components/shared/HomeScrollEffect";
 import LandingPage from "@/components/shared/LandingPage";
 import CardsInfo from "@/components/shared/info";

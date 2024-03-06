@@ -1,5 +1,5 @@
 "use client";
-import Addcutomer from "@/components/shared/Addcutomer";
+import Addcutomer from "@/components/shared/CustomerComponents/Addcutomer";
 import { ClipboardPlus, MoveDownLeft, MoveUpRight, Search, Users } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -11,7 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import CustomerCard from "@/components/shared/CustomerCard";
+import CustomerCard from "@/components/shared/CustomerComponents/CustomerCard";
 import { getRandomColor } from "@/helper/getRandomColor";
 import axios from "axios";
 import { sortedTransactions } from "@/helper/filters";

@@ -3,10 +3,11 @@ import { getRandomColor } from "@/helper/getRandomColor";
 import axios from "axios";
 import { Settings } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import CustomerSetting from "./CustomerSetting";
-import SelectedCustomerHistory from "./SelectedCustomerHistory";
-import GetcashCustomer from "./GetcashCustomer";
-import GetCreditCustomer from "./GetCreditCustomer";
+import CustomerSetting from "./CustomerComponents/CustomerSetting";
+import SelectedCustomerHistory from "./CustomerComponents/SelectedCustomerHistory";
+import GetcashCustomer from "./CustomerComponents/GetcashCustomer";
+import GetCreditCustomer from "./CustomerComponents/GetCreditCustomer";
+import ClearCustomeCredit from "./CustomerComponents/CrealCustomerCredit";
 
 // Define the type for user data
 interface UserData {
@@ -104,7 +105,7 @@ const SelectedUser = ({ value }: Props) => {
           py-2 px-4 text-white flex flex-col items-start">
                 <p>NET BALANCE</p>
                 <p className="text-white text-[.9rem]">{userinfo.customerName}
-                  <span>{userinfo.transactionType === "CASH" ? " Gave " : " will Give "}</span>
+                  <span>{totalCredit !== 0 ? " You'll " : " "}</span>
                   <span className={`text-white`}>
                     {totalCredit}
                   </span>
@@ -113,7 +114,7 @@ const SelectedUser = ({ value }: Props) => {
 
           <div className="w-full border-b-[1px] border-[#888] h-20 py-2 mt-0.5 px-4 flex justify-between items-center">
             <div className="text-[#888] text-[.9rem]">ENTREIS</div>
-            <div className="flex gap-12 items-center">
+            <div className="flex gap-14 items-center">
             <div className="text-[#888] text-[.9rem]">YOU GOT</div>
             <div className="text-[#888] text-[.9rem]">YOU GAVE</div>
             </div>
@@ -132,8 +133,9 @@ const SelectedUser = ({ value }: Props) => {
           </div>
 
           <div className="w-full py-3 px-4 flex items-center justify-between">
-            <GetcashCustomer/>
-            <GetCreditCustomer/>
+            <GetcashCustomer customerId={value} />
+            <GetCreditCustomer customerId={value}/>
+            <ClearCustomeCredit customerId={value}/>
           </div>
 
         </div>
