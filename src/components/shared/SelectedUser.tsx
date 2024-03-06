@@ -5,18 +5,20 @@ import { Settings } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import CustomerSetting from "./CustomerSetting";
 import SelectedCustomerHistory from "./SelectedCustomerHistory";
+import GetcashCustomer from "./GetcashCustomer";
+import GetCreditCustomer from "./GetCreditCustomer";
 
 // Define the type for user data
 interface UserData {
   _id: string;
   customerName: string;
-  number: number;
+  number?: number;
   description: string;
   money: number;
   transactionType: string;
   createdAt: string | Date;
-  updatedAt: string;
-  __v: number;
+  updatedAt?: string;
+  __v?: number;
 }
 
 interface Props {
@@ -26,6 +28,8 @@ interface Props {
 // ... other imports ...
 
 const SelectedUser = ({ value }: Props) => {
+  const [totalCash,setTotalCash] = useState<Number | null>();
+  const [totalCredit,setTotalCredit] = useState();
   const [userinfo, setUserInfo] = useState<UserData | null>(null); // Use the defined type
   const [userTransactionHistory,setUserTransactionHistory] = useState<UserData[]>([]);
 
@@ -48,8 +52,11 @@ const SelectedUser = ({ value }: Props) => {
         // Check if userinfo is not null before accessing properties
         if (userinfo) {
           const userHistory = await axios.post("http://localhost:4000/v1/api/get-selected-customer-history", data);
-          setUserTransactionHistory(userHistory.data.data.transactions.transactionHistory);
-          console.log(userTransactionHistory)
+          setUserTransactionHistory(userHistory.data.data.transactions.totalTrasaction);
+          setUserTransactionHistory(userHistory.data.data.transactions);
+          setTotalCash(userHistory.data.data.totalCash)
+          setTotalCredit(userHistory.data.data.totalCredit)
+          console.log(totalCash,totalCredit)
         }
       } catch (error) {
         console.log(error);
@@ -64,6 +71,7 @@ const SelectedUser = ({ value }: Props) => {
     ? concatenateFirstLetters(userinfo.customerName)
     : "";
 
+    const totalNetBalance = 0;
   return (
     <div className="w-full h-full mt-16">
       {userinfo ? (
@@ -97,8 +105,8 @@ const SelectedUser = ({ value }: Props) => {
                 <p>NET BALANCE</p>
                 <p className="text-white text-[.9rem]">{userinfo.customerName}
                   <span>{userinfo.transactionType === "CASH" ? " Gave " : " will Give "}</span>
-                  <span className={`${userinfo.transactionType === "CASH" ? "text-green-500" : "text-red-600"}`}>
-                    {userinfo.money}
+                  <span className={`text-white`}>
+                    {totalCredit}
                   </span>
                 </p>
           </div>
@@ -124,8 +132,8 @@ const SelectedUser = ({ value }: Props) => {
           </div>
 
           <div className="w-full py-3 px-4 flex items-center justify-between">
-            <p className="py-2 px-2 bg-white text-green-500 font-semibold rounded-xl w-[45%] flex ite justify-center cursor-pointer hover:bg-green-500 hover:text-white duration-200">GET CASH</p>
-            <p className="py-2 px-2 bg-white text-red-500 font-semibold rounded-xl w-[45%] flex ite justify-center cursor-pointer hover:bg-red-500 hover:text-white duration-200">GIVE MORE CREDIT</p>
+            <GetcashCustomer/>
+            <GetCreditCustomer/>
           </div>
 
         </div>
