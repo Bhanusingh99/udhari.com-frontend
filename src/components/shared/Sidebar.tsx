@@ -1,5 +1,5 @@
 'use client'
-import { BellRing, ClipboardMinus, IndianRupee, Package, Settings, Truck, UsersRound } from 'lucide-react'
+import { BellRing, ClipboardMinus, Edit, IndianRupee, Newspaper, Package, Settings, Truck, UsersRound } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -46,7 +46,7 @@ const Sidebar = () => {
               key={1} 
               url={'/dashboard/Invoices'}
               title={'Invoice'}
-              icons={<UsersRound size={18} />}
+              icons={<Newspaper size={18} />}
               />
               </div>
         </div>

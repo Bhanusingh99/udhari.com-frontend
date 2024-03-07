@@ -20,7 +20,13 @@ interface Transaction {
 
   const Invoices = () => {
     const [arr, setArr] = useState<Transaction[]>([]);
-    const [userSelected, setUserSelected] = useState("");
+
+    const[name,setName] = useState("")
+    const[money,setMoney] = useState(0)
+    const[description,setDescription] = useState("")
+    const[createdAt,setCreatedAt] = useState("")
+    const[transactionType,setTransactionType] = useState("")
+
 
     const sortedTransactions = (transactions: Transaction[]) => {
         return transactions.sort((a, b) => {
@@ -46,11 +52,57 @@ interface Transaction {
         console.log(arr); // Now arr contains the array of objects
       }, []);
 
+      const handleCustomerCardClick = async(
+        name:string,
+        money:number,
+        description:string,
+        createdAt:string,
+        transactionType:string
+        ) => {
+          setCreatedAt(createdAt)
+          setDescription(description)
+          setName(name)
+          setMoney(money)
+          setTransactionType(transactionType)
+        console.log(name,money,description,createdAt,transactionType);
+        try {
+          const invoiceData = {
+            name:"1A0AA1",
+            companyInfo:{
+              companyName:"udhari.com",
+              companySubLocation:"JagdishPur,277001, Ballia",
+              companyLocation:"udhari_com@gmail.com",
+              conpanyContactInfo:"9919206676",
+              GSTIN:"969696BH95ER"
+            },
+            UserInfo:{
+              userName:name,
+              itemsBought:description,
+              totalPrice:money,
+              TransactionMode:transactionType
+            },
+            date:createdAt
+          }
+          const response = await axios.post('http://localhost:4000/v1/api/generate-invoice', {
+            invoiceData: invoiceData,
+          }, {
+            responseType: 'blob', // Set responseType to 'blob' to handle binary data
+          });
+    
+          // Create a blob from the binary data
+          const blob = new Blob([response.data], { type: 'application/pdf' });
+    
+          // Create a download link and trigger a click event
+          const downloadLink = document.createElement('a');
+          downloadLink.href = window.URL.createObjectURL(blob);
+          downloadLink.download = 'invoice.pdf';
+          document.body.appendChild(downloadLink);
+          downloadLink.click();
+          document.body.removeChild(downloadLink);
+        } catch (error) {
+          console.error('Error generating PDF:', error);
+        }
 
-      const handleCustomerCardClick = (id: any) => {
-        // Set the userSelected state when a CustomerCard is clicked
-        setUserSelected(id);
-        console.log(userSelected);
       };
 
   return (
@@ -66,8 +118,8 @@ interface Transaction {
             date={items.createdAt}
             money={items.money}
             id={items._id}
-            transactionType={items.transactionType}
-            onClick={() => handleCustomerCardClick(items._id)}
+            transactionType={items.transactionType}//@ts-ignore
+            onClick={() => handleCustomerCardClick(items.customerName,items.description,items.createdAt,items.money,items.transactionType)}
             />
             )
         }
