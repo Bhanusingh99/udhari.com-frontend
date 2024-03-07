@@ -40,14 +40,15 @@ const Sidebar = () => {
               title={'customer'}
               icons={<UsersRound size={18} />}
               />
-
+              </div>
+              <div className='flex flex-col mt-1'>
               <SidebarBtnComponent 
-              key={2} 
-              url={'/dashboard/suppliers'}
-              title={'suppliers'}
-              icons={<Truck size={20}/>}
+              key={1} 
+              url={'/dashboard/Invoices'}
+              title={'Invoice'}
+              icons={<UsersRound size={18} />}
               />
-            </div>
+              </div>
         </div>
 
         <div>

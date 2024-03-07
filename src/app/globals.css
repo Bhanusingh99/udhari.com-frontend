@@ -92,3 +92,6 @@
   font-style: normal;
 }
 
+.for_shadow{
+  box-shadow: 0 0 5px #999;
+}

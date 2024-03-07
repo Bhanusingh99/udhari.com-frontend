@@ -64,9 +64,6 @@ const DashboardCustome = () => {
       console.log(res.data.data.transactions);
       //@ts-ignore
       setArr(sortedTransactions(res.data.data.transactions));
-      // if(searchQuery === ""){
-      //   setArr(sortedTransactions(res.data.data.transactions))
-      // }
       setTotalCash(res.data.data.totalCash);
       setTotalCredit(res.data.data.totalCredit);
     } catch (error) {
@@ -124,9 +121,7 @@ const DashboardCustome = () => {
   };
 
 
-  
-  console.log(checkBlur)
-  const param = usePathname();
+    const param = usePathname();
   return (
     <div className="w-full h-full bg-green-500 flex">
       <div className="w-[55%] h-full bg-[#222] border-r-[1px] border-[#888]">
@@ -140,16 +135,6 @@ const DashboardCustome = () => {
             }`}
           >
             Customer <span>7</span>
-          </Link>
-          <Link
-            href={"/dashboard/suppliers"}
-            className={`font-semibold ${
-              param === "/dashboard/suppliers"
-                ? "border-white text-white  border-b-[1px]"
-                : "text-[#999]"
-            }`}
-          >
-            Suppliers <span>5</span>
           </Link>
         </div>
 
