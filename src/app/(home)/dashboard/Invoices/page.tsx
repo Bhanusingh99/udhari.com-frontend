@@ -41,15 +41,13 @@ interface Transaction {
           const res = await axios.get(
             "http://localhost:4000/v1/api/total-customers-transactions"
           );
-          console.log(res.data.data.transactions);
           setArr(sortedTransactions(res.data.data.transactions));
         } catch (error) {
-          console.log(error);
+          throw error
         }
       };
       useEffect(() => {
         getAllCustomers();
-        console.log(arr); // Now arr contains the array of objects
       }, []);
 
       const handleCustomerCardClick = async(
@@ -64,7 +62,6 @@ interface Transaction {
           setName(name)
           setMoney(money)
           setTransactionType(transactionType)
-        console.log(name,money,description,createdAt,transactionType);
         try {
           const invoiceData = {
             name:"1A0AA1",

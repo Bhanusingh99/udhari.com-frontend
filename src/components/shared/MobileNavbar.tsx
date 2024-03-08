@@ -24,9 +24,8 @@ const MobileNavbar = () => {
       try {
         const res = await axios.get("/api/userinfo");
         setId(res.data);
-        console.log(id)
       } catch (error) {
-        console.log(error)
+        throw(error)
       }
     }
     getUserInfo()
@@ -35,13 +34,12 @@ const MobileNavbar = () => {
   const handleLogout = async () =>{
     try {
       const res = await axios.get('/api/log-out')
-      console.log('User successfully logged-out')
 
       if(res.data.success){
         router.push('/')
       }
     } catch (error) {
-      console.log(error)
+      throw(error)
     }
   }
 

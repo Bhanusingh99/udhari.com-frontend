@@ -80,12 +80,11 @@ const Addcutomer = () => {
 
     try {
     const res = await axios.post("http://localhost:4000/v1/api/create-customer",data);
-    console.log(res);
     if(res.statusText === "Created"){
       window.location.reload();
     }
     } catch (error) {
-      console.log(error)
+      throw(error)
     }
 
   };

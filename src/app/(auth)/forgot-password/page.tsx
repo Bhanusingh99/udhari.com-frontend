@@ -20,7 +20,6 @@ const ForgotPassword = () => {
             const data = { email };
     
             const res = await api.post("/v1/api/forgot-password", data);
-            console.log(res.data);
     
             // Handle the response from the backend
             

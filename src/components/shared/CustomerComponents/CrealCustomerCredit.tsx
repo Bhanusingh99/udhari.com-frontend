@@ -29,7 +29,7 @@ const GetcashCustomer = ({customerId}:Props) => {
           window.location.reload();
         }
       } catch (error) {
-        console.log(error)
+        throw(error)
       }
     }
 

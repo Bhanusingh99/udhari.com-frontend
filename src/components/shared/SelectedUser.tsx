@@ -57,10 +57,9 @@ const SelectedUser = ({ value }: Props) => {
           setUserTransactionHistory(userHistory.data.data.transactions);
           setTotalCash(userHistory.data.data.totalCash)
           setTotalCredit(userHistory.data.data.totalCredit)
-          console.log(totalCash,totalCredit)
         }
       } catch (error) {
-        console.log(error);
+        throw(error);
       }
     };
     

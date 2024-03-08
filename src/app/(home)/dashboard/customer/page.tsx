@@ -22,6 +22,7 @@ import { getRandomColor } from "@/helper/getRandomColor";
 import axios from "axios";
 import { sortedTransactions } from "@/helper/filters";
 import SelectedUser from "@/components/shared/SelectedUser";
+import { filterAndSortTransactions } from "@/helper/filterBasedOnType";
 
 interface Transaction {
   _id: string;
@@ -51,7 +52,6 @@ const DashboardCustome = () => {
     return transactions.sort((a, b) => {
       const dateA = new Date(a.sortingDate);
       const dateB = new Date(b.sortingDate);
-
       return dateB.getTime() - dateA.getTime();
     });
   };
@@ -61,20 +61,23 @@ const DashboardCustome = () => {
       const res = await axios.get(
         "http://localhost:4000/v1/api/total-customers-transactions"
       );
-      console.log(res.data.data.transactions);
       //@ts-ignore
       setArr(sortedTransactions(res.data.data.transactions));
+      setDuplicate(res.data.data.transactions)
+      console.log(duplicate)
       setTotalCash(res.data.data.totalCash);
       setTotalCredit(res.data.data.totalCredit);
     } catch (error) {
-      console.log(error);
+      throw error
     }
   };
 
   useEffect(() => {
     getAllCustomers();
-    console.log(arr);
+    console.log(filterAndSortTransactions(duplicate,"CASH"))
   }, []);
+
+  filterAndSortTransactions(duplicate,"CASH")
 
   useEffect(() => {
     const delay = 10;
@@ -82,9 +85,6 @@ const DashboardCustome = () => {
     const timer = setTimeout(() => {
       const getSearchedCustomer = async () => {
         try {
-          // if(searchQuery === ""){
-          //   setArr(duplicate)
-          // }
           const res = await axios.get(
             `http://localhost:4000/v1/api/search/${encodeURIComponent(
               searchQuery
@@ -93,7 +93,6 @@ const DashboardCustome = () => {
           if (isMounted) {
             // Handle the data, e.g., setResults(res.data)
             setDuplicate(res.data.data);
-            console.log("from duplicate",duplicate)
           }
         } catch (error: any) {
           console.error("Error fetching data:", error.message);
@@ -117,7 +116,6 @@ const DashboardCustome = () => {
   const handleCustomerCardClick = (customerId: string) => {
     // Set the userSelected state when a CustomerCard is clicked
     setuserSelected(customerId);
-    console.log(userSelected);
   };
 
 

@@ -35,7 +35,6 @@ const Sign_Up = () => {
       withCredentials:true
     })
     const res = await api.post("/v1/api/sign-up",formData);
-    console.log(res.data.success);
     if(res.data.success){
       router.push("/dashboard")
     }

@@ -30,13 +30,11 @@ const ForgotPassword = () => {
     const handleSubmit = async (e:any) => {
       e.preventDefault();
 
-      console.log(formData)
       const api = axios.create({
         baseURL:"http://localhost:4000",
         withCredentials:true
       })
       const res = await api.post("/v1/api/update-password",formData);
-      console.log(res.data.success);
       if(res.data.success){
         route.push("/log-in")
       }

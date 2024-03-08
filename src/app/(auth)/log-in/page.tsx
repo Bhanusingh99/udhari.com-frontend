@@ -29,7 +29,6 @@ const LogIn = () => {
       withCredentials:true
     })
     const res = await api.post("/v1/api/log-in",formData);
-    console.log(res.data.success);
     if(res.data.success){
       router.push("/dashboard/customer")
     }

@@ -32,7 +32,6 @@ const ChangePassword = () => {
       withCredentials:true
     })
     const res = await api.post("/v1/api/change-password",formData);
-    console.log(res.data.success);
     if(res.data.success){
       router.push("/dashboard")
     }
