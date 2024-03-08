@@ -24,6 +24,7 @@ import { sortedTransactions } from "@/helper/filters";
 import SelectedUser from "@/components/shared/SelectedUser";
 import { filterAndSortTransactions } from "@/helper/filterBasedOnType";
 
+
 interface Transaction {
   _id: string;
   sortingDate: string;
@@ -38,6 +39,7 @@ interface Transaction {
   __v: number;
 }
 
+
 const DashboardCustome = () => {
   const[checkBlur,setCheckblur] = useState(false)
   const [searchQuery, setSearchQuery] = useState("");
@@ -45,7 +47,7 @@ const DashboardCustome = () => {
   const [totalCash, setTotalCash] = useState();
   const [totalCredit, setTotalCredit] = useState();
   const [arr, setArr] = useState<{ name: string; time: string; form: string; money: number }[]>([]);
-  const [duplicate, setDuplicate] = useState<[]>([]);
+  const [duplicate, setDuplicate] = useState<{customerName:string;id: string;createdAt: string;sortingDate: string; money: number;description: string;transactionType: string;}[]>([]);
 
  
   const sortedTransactions = (transactions: Transaction[]) => {
@@ -74,10 +76,11 @@ const DashboardCustome = () => {
 
   useEffect(() => {
     getAllCustomers();
-    console.log(filterAndSortTransactions(duplicate,"CASH"))
   }, []);
 
-  filterAndSortTransactions(duplicate,"CASH")
+  useEffect(() => {
+    // console.log(filterAndSortTransactions(arr, "CASH"));
+  }, [duplicate]);
 
   useEffect(() => {
     const delay = 10;
@@ -163,10 +166,10 @@ const DashboardCustome = () => {
           </div>
         </div>
 
-        <div className="w-full h-28 border-b-[1px] border-[#888] flex justify-around items-center">
-          <div>
-            <p className="text-white my-1 text-[.9rem]">Search for customers</p>
-            <div className="flex items-center justify-center border-[1px] border-[#777] px-4 rounded-xl">
+        <div className="w-full h-28 border-b-[1px] border-[#888] flex justify-around items-center px-4">
+          <div className="w-full">
+            <p className="text-white my-1 text-[1rem]">Search for customers</p>
+            <div className="flex items-center justify-center border-[1px] border-[#777] px-4">
               <Search color="#999" size={17} />
               <input
                 type="search"
@@ -175,47 +178,8 @@ const DashboardCustome = () => {
                 onBlur={() => setCheckblur(false)}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="py-1.5 px-2 bg-transparent outline-none text-white"
+                className="py-2 px-2 bg-transparent outline-none text-white w-full"
               />
-            </div>
-          </div>
-
-          {
-            checkBlur && 
-            <div className="absolute w-[44.75rem] h-[22rem] bg-white top-[18rem]">
-
-            </div>
-          }
-
-          <div>
-            <p className="text-white my-1 text-[.9rem]">Filter By</p>
-            <div>
-              <Select>
-                <SelectTrigger className="w-[120px] text-white rounded-xl border-[1px] border-[#777]">
-                  <SelectValue placeholder="All" />
-                </SelectTrigger>
-                <SelectContent className="bg-white">
-                  <SelectItem value="light">You'll Give</SelectItem>
-                  <SelectItem value="dark">You'll Get</SelectItem>
-                  <SelectItem value="system">Settled</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-
-          <div>
-            <p className="text-white my-1 text-[.9rem]">Sort By</p>
-            <div>
-              <Select>
-                <SelectTrigger className="w-[120px] text-white rounded-xl border-[1px] border-[#777]">
-                  <SelectValue placeholder="Select" />
-                </SelectTrigger>
-                <SelectContent className="bg-white">
-                  <SelectItem value="light">Most Recent</SelectItem>
-                  <SelectItem value="dark">Highest Amount</SelectItem>
-                  <SelectItem value="system">Lowest Amount</SelectItem>
-                </SelectContent>
-              </Select>
             </div>
           </div>
         </div>
