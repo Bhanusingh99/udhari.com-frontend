@@ -1,6 +1,7 @@
 "use client";
 import Addcutomer from "@/components/shared/CustomerComponents/Addcutomer";
 import {
+  ChevronDown,
   ClipboardPlus,
   MoveDownLeft,
   MoveUpRight,
@@ -18,44 +19,60 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import CustomerCard from "@/components/shared/CustomerComponents/CustomerCard";
-import { getRandomColor } from "@/helper/getRandomColor";
 import axios from "axios";
 import { sortedTransactions } from "@/helper/filters";
 import SelectedUser from "@/components/shared/SelectedUser";
-import { filterAndSortTransactions } from "@/helper/filterBasedOnType";
-
+import {
+  filterAndSortTransactions,
+  filterAndSortCreditTransactions,
+  filterTransactionsByType,
+} from "@/helper/filterBasedOnTime";
 
 interface Transaction {
-  _id: string;
-  sortingDate: string;
   customerName: string;
-  number: number;
-  description: string;
-  money: number;
-  date: string;
-  transactionType: string;
+  id: string;
   createdAt: string;
-  updatedAt: string;
-  __v: number;
+  sortingDate: string;
+  money: number;
+  description: string;
+  transactionType: string;
 }
 
 
+interface DropdownProps {
+  onSelect: (selectedItem: string) => void;
+}
+
 const DashboardCustome = () => {
-  const[checkBlur,setCheckblur] = useState(false)
+  const [TotalTransactions, setTotalTransactions] = useState<Transaction[]>([]);
+
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [oldestTotalTransactions, setOldestTotalTransactions] = useState<Transaction[]>([]);
+  const [filteredCashTypeTransactions, setFilteredCashTypeTransactions] =useState<Transaction[]>([]);
+  const [filteredCreditTypeTransactions, setFilteredCreditTypeTransactions] =useState<Transaction[]>([]);
+  const [filteredMostCredit, setFilteredMostCredit] = useState<Transaction[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [userSelected, setuserSelected] = useState("");
   const [totalCash, setTotalCash] = useState();
   const [totalCredit, setTotalCredit] = useState();
-  const [arr, setArr] = useState<{ name: string; time: string; form: string; money: number }[]>([]);
-  const [duplicate, setDuplicate] = useState<{customerName:string;id: string;createdAt: string;sortingDate: string; money: number;description: string;transactionType: string;}[]>([]);
 
- 
-  const sortedTransactions = (transactions: Transaction[]) => {
-    return transactions.sort((a, b) => {
-      const dateA = new Date(a.sortingDate);
-      const dateB = new Date(b.sortingDate);
-      return dateB.getTime() - dateA.getTime();
-    });
+  const [selectedFilter, setSelectedFilter] = useState<string>("Most recent");
+  const [selectedSort, setSelectedSort] = useState<string>("");
+
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedOption, setSelectedOption] = useState("");
+
+  const options = ["Most recent", "oldest","You'll Get", "You Got","Highest Amount"];
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const handleOptionClick = (option: string) => {
+    setSelectedOption(option);
+    setSelectedFilter(option)
+    setIsOpen(false); // Collapse the dropdown after selecting an option
   };
 
   const getAllCustomers = async () => {
@@ -63,14 +80,21 @@ const DashboardCustome = () => {
       const res = await axios.get(
         "http://localhost:4000/v1/api/total-customers-transactions"
       );
-      //@ts-ignore
-      setArr(sortedTransactions(res.data.data.transactions));
-      setDuplicate(res.data.data.transactions)
-      console.log(duplicate)
+
+      const array = res.data.data.transactions;
+      console.log(array)
+      setOldestTotalTransactions(array);
+      setTransactions(filterAndSortTransactions(array));
+      setFilteredMostCredit(filterAndSortCreditTransactions(array));
+      setFilteredCashTypeTransactions(filterTransactionsByType(array, "CASH"));
+      setFilteredCreditTypeTransactions(
+      filterTransactionsByType(array, "CREDIT")
+      );
+
       setTotalCash(res.data.data.totalCash);
       setTotalCredit(res.data.data.totalCredit);
     } catch (error) {
-      throw error
+      throw error;
     }
   };
 
@@ -79,8 +103,23 @@ const DashboardCustome = () => {
   }, []);
 
   useEffect(() => {
-    // console.log(filterAndSortTransactions(arr, "CASH"));
-  }, [duplicate]);
+    // Function to update TotalTransactions based on selectedFilter and selectedSort
+    const updateTotalTransactions = () => {
+      if (selectedFilter === "Most recent") {
+        setTotalTransactions(transactions);
+      } else if (selectedFilter === "You'll Get") {
+        setTotalTransactions(filteredCreditTypeTransactions);
+      } else if (selectedFilter === "You Got") {
+        setTotalTransactions(filteredCashTypeTransactions);
+      }else if (selectedFilter === "Highest Amount") {
+        setTotalTransactions(filteredMostCredit);
+      }else if (selectedFilter === "oldest") {
+        setTotalTransactions(oldestTotalTransactions);
+      }
+    };
+
+    updateTotalTransactions();
+  }, [transactions,selectedFilter, selectedSort, oldestTotalTransactions, filteredCreditTypeTransactions]);
 
   useEffect(() => {
     const delay = 10;
@@ -94,8 +133,6 @@ const DashboardCustome = () => {
             )}`
           );
           if (isMounted) {
-            // Handle the data, e.g., setResults(res.data)
-            setDuplicate(res.data.data);
           }
         } catch (error: any) {
           console.error("Error fetching data:", error.message);
@@ -117,29 +154,18 @@ const DashboardCustome = () => {
   }, [searchQuery]);
 
   const handleCustomerCardClick = (customerId: string) => {
-    // Set the userSelected state when a CustomerCard is clicked
     setuserSelected(customerId);
   };
 
 
-    const param = usePathname();
+  
+
+  const param = usePathname();
   return (
     <div className="w-full h-full bg-green-500 flex">
       <div className="w-[55%] h-full bg-[#222] border-r-[1px] border-[#888]">
-        <div className="w-full h-16 mt-12 border-b-[1px] border-[#888] px-6 pt-7 flex justify-around">
-          <Link
-            href={"/dashboard/customer"}
-            className={`font-semibold ${
-              param === "/dashboard/customer"
-                ? "border-white text-white  border-b-[1px]"
-                : " text-[#999]"
-            }`}
-          >
-            Customer <span>7</span>
-          </Link>
-        </div>
 
-        <div className="w-full h-16 border-b-[1px] border-[#888] flex justify-around items-center">
+        <div className="w-full h-16 border-b-[1px] border-[#888] flex justify-around items-center mt-16">
           <div className="flex justify-center items-end gap-1">
             <p className="text-white">
               Total Cash:{" "}
@@ -166,41 +192,60 @@ const DashboardCustome = () => {
           </div>
         </div>
 
-        <div className="w-full h-28 border-b-[1px] border-[#888] flex justify-around items-center px-4">
-          <div className="w-full">
+        <div className="py-4 border-b-[1px] border-[#888] flex justify-between items-center px-4
+        max-md:flex-col">
+          <div className="">
             <p className="text-white my-1 text-[1rem]">Search for customers</p>
             <div className="flex items-center justify-center border-[1px] border-[#777] px-4">
               <Search color="#999" size={17} />
               <input
                 type="search"
                 placeholder="name"
-                onFocus={() => setCheckblur(true)}
-                onBlur={() => setCheckblur(false)}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="py-2 px-2 bg-transparent outline-none text-white w-full"
+                className="py-2 px-2 bg-transparent outline-none text-white max-md:w-full"
               />
             </div>
           </div>
+
+        <div>
+          <p className="text-white mb-1">Filter</p>
+          <div className="dropdown py-2 px-4 text-white border border-[#999] w-[220px] max-md:w-full">
+            <button 
+            className="flex gap-2 justify-between w-full items-center"
+            onClick={toggleMenu}>{selectedOption === "" ? "Filter" : selectedOption}
+            <ChevronDown size={20}/>
+            </button>
+            {isOpen && (
+              <ul className="menu absolute bg-white text-black mt-2 w-[220px] py-2 px-1 ml-[-1rem]">
+                {options.map((option) => (
+                  <li key={option} onClick={() => handleOptionClick(option)} className="cursor-pointer my-1">
+                    {option}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </div>
+
         </div>
 
         <div
-          className="w-full h-[22rem] px-4 py-4 border-b-[1px] 
+          className="w-full h-[25.5rem] px-4 py-4 border-b-[1px] 
       border-[#888] overflow-y-scroll"
         >
-          {arr.length === 0
+          {TotalTransactions.length === 0
             ? ""
-            : arr.map((items, index) => {
-                const color = getRandomColor();
+            : TotalTransactions.map((items, index) => {
                 return (
                   <CustomerCard
                     key={index}
-                    color={color} //@ts-ignore
                     id={items.id} //@ts-ignore
                     name={items.customerName} //@ts-ignore
                     time={items.createdAt} //@ts-ignore
                     form={items.transactionType}
                     money={items.money} //@ts-ignore
+                    bgColor={items.bgColor}
                     onClick={() => handleCustomerCardClick(items.id)}
                   />
                 );

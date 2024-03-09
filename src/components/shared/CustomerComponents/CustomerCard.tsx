@@ -8,11 +8,11 @@ interface Props {
     time: string;
     money: number;
     form: string;
-    color: string;
+    bgColor: string;
     onClick?: () => void;
 }
 
-const CustomerCard: React.FC<Props> = ({ id, name, time, money, form, color, onClick }: Props) => {
+const CustomerCard: React.FC<Props> = ({ id, name, time, money, form, bgColor, onClick }: Props) => {
 
     const logo = concatenateFirstLetters(name);
     const val = money;
@@ -20,7 +20,7 @@ const CustomerCard: React.FC<Props> = ({ id, name, time, money, form, color, onC
     return (
         <div className="w-full flex justify-between my-4 cursor-pointer" onClick={onClick}>
             <div className="flex gap-4">
-                <div className={`w-10 h-10 rounded-full ${color} flex justify-center items-center`}>
+                <div className={`w-10 h-10 rounded-full ${bgColor} flex justify-center items-center`}>
                     <h1 className="text-[1rem] text-white">{logo}</h1>
                 </div>
 

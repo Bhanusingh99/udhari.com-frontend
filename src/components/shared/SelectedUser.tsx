@@ -1,5 +1,4 @@
 import { concatenateFirstLetters } from "@/helper/getNamelater";
-import { getRandomColor } from "@/helper/getRandomColor";
 import axios from "axios";
 import { Settings } from "lucide-react";
 import React, { useEffect, useState } from "react";
@@ -16,6 +15,7 @@ interface UserData {
   number?: number;
   description: string;
   money: number;
+  bgColor:string;
   transactionType: string;
   createdAt: string | Date;
   updatedAt?: string;
@@ -38,7 +38,6 @@ const SelectedUser = ({ value }: Props) => {
     id: value,
   };
 
-  const randomColor: string = getRandomColor();
 
   useEffect(() => {
     const getUser = async () => {
@@ -80,7 +79,7 @@ const SelectedUser = ({ value }: Props) => {
           <div className="w-full h-20 py-2 px-4 flex justify-between items-center">
             <div className="w-full flex gap-2">
               <div
-                className={`w-10 h-10 ${randomColor} rounded-full flex justify-center items-center text-white`}
+                className={`w-10 h-10 ${userinfo.bgColor} rounded-full flex justify-center items-center text-white`}
               >
                 <p className="text-[1rem]">{nameLetter}</p>
               </div>

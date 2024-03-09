@@ -94,7 +94,7 @@ const Addcutomer = () => {
       <Sheet>
         <SheetTrigger>
           <p
-            className="w-full py-2 px-6 bg-green-500
+            className="w-full py-2 px-6 bg-green-600
         text-white flex items-center justify-center font-semibold"
           >
             <Plus size={22}/>
