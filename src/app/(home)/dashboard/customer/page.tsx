@@ -127,26 +127,14 @@ const DashboardCustome = () => {
     const timer = setTimeout(() => {
       const getSearchedCustomer = async () => {
         try {
-          const res = await axios.get(
-            `http://localhost:4000/v1/api/search/${encodeURIComponent(
-              searchQuery
-            )}`
-          );
-          if (isMounted) {
-          }
+          const res = await axios.get(`http://localhost:4000/v1/api/search/${searchQuery}`);
+            setTotalTransactions(res.data.data)
         } catch (error: any) {
           console.error("Error fetching data:", error.message);
           // Handle errors, e.g., set an error state or show a message to the user
         }
       };
-
-      let isMounted = true;
       getSearchedCustomer();
-
-      // Cleanup function to set isMounted to false when the component unmounts
-      return () => {
-        isMounted = false;
-      };
     }, delay);
 
     // Clear the previous timer on each searchQuery change
@@ -158,7 +146,11 @@ const DashboardCustome = () => {
   };
 
 
-  
+  const checkEmpty = () =>{
+    if(searchQuery === ""){
+      setTotalTransactions(transactions)
+    }
+  }
 
   const param = usePathname();
   return (

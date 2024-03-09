@@ -103,10 +103,9 @@ interface Transaction {
       };
 
   return (
-    <div className='mt-16 text-white py-2 px-8 w-full overflow-y-scroll'>
-
-        <h1 className=' text-[2.5rem] font-semibold text-center'>Generate Invoice</h1>
-
+    <div className='overflow-y-scroll mt-20 px-4'>
+    <h1 className='text-[2rem] text-white font-semibold'>Generate Invoices</h1>
+    <div className='mt-4 text-black py-2 flex flex-wrap w-full'>
         {
             arr.map((items,index) => 
             <InvoiceCard key={index}
@@ -120,7 +119,7 @@ interface Transaction {
             />
             )
         }
-   
+    </div>
     </div>
   )
 }
