@@ -13,7 +13,7 @@ interface Props{
 const SidebarBtnComponent = ({url,icons,title}:Props) => {
   const param = usePathname();
   return(
-    <Link href={`${url}`} className={`sidebar-button ${param === url ?"bg-[#333]" : "" }`}>
+    <Link href={`${url}`} className={`sidebar-button ${param === url ?"bg-[#333] border border-white" : "" }`}>
       {icons}
       {title}
     </Link>

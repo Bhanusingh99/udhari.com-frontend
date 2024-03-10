@@ -10,7 +10,7 @@ const ManageItems = () => {
            <CreateItems/>
         </div>
 
-        <div className='w-full h-[60vh] flex justify-center items-center'>
+        <div className='w-full h-[80vh] flex justify-center items-center'>
                 <div className=''>
                    <PackageOpen size={90} color='white' className='w-full flex justify-center items-center'/>
                    <p className='text-[1.5rem] text-white'>Add items and no items are there</p>
