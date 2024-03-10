@@ -1,5 +1,5 @@
 'use client'
-import { BellRing, ClipboardMinus, Edit, IndianRupee, Newspaper, Package, Settings, ShoppingCart, Truck, UsersRound } from 'lucide-react'
+import { BellRing, ClipboardMinus, Edit, IndianRupee, Newspaper, Package, PackageOpen, Settings, ShoppingCart, Truck, UsersRound } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -47,6 +47,14 @@ const Sidebar = () => {
               url={'/dashboard/Invoices'}
               title={'Invoice'}
               icons={<Newspaper size={18} />}
+              />
+              </div>
+              <div className='flex flex-col mt-1'>
+              <SidebarBtnComponent 
+              key={1} 
+              url={'/dashboard/manageItems'}
+              title={'Items'}
+              icons={<PackageOpen size={20}/>}
               />
               </div>
         </div>

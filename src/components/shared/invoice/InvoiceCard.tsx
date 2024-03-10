@@ -15,7 +15,7 @@ interface Props {
 
 const InvoiceCard = ({ name, description, date, money, id, transactionType, onClick }: Props) => {
   return (
-    <div className='w-[17rem] rounded-3xl h-[12rem] py-4 px-6 text-Black for_shadow mt-4 mx-auto bg-white flex flex-col justify-between items-center mb-6 border-[1px] border-[#666]'>
+    <div className='w-[17rem] rounded-3xl h-[12rem] py-4 px-6 text-Black mt-4 mx-auto bg-white flex flex-col justify-between items-center mb-6 border-[1px] border-[#666]'>
       
       <div className='flex w-full justify-between'>
         <p className='text-[1.25rem] w-[70%] line-clamp-1'>{name}</p>
@@ -35,7 +35,7 @@ const InvoiceCard = ({ name, description, date, money, id, transactionType, onCl
 
       <button
         onClick={onClick}
-        className={`py-1.5 w-full text-white px-3 line-clamp-1 ${transactionType === "CASH" ? "bg-green-500" : "bg-red-500"}`}
+        className={`py-1.5 w-full rounded-xl text-white px-3 line-clamp-1 ${transactionType === "CASH" ? "bg-green-500" : "bg-red-500"}`}
         >
           Generate Invoice
         </button>

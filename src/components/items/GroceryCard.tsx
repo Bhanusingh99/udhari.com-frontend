@@ -17,7 +17,7 @@ interface Props{
 const GroceryCard = ({name,imgUrl,originalPrice,discount,quentity,storeName,inStock}:Props) => {
     const price = calculateDiscountedPrice(originalPrice,discount)
   return (
-    <div className='py-4 px-4 w-[25%] max-md:w-full h-[22rem] bg-white m-4'>
+    <div className='py-4 px-4 w-[26%] max-md:w-full h-[22rem] bg-white rounded mr-4'>
 
     <Link href={"/"} className='flex justify-center items-center h-[50%]'>
           <Image src={`${imgUrl}`} height={120} width={120} alt='jj' />
@@ -49,8 +49,8 @@ const GroceryCard = ({name,imgUrl,originalPrice,discount,quentity,storeName,inSt
         {
             inStock ?
             <>
-            <button className='w-[45%] py-2 bg-[#222] text-white cursor-default'>{quentity}</button>
-            <Link href={"/"} className='w-[45%]'>
+            <button className='w-[48%] py-2 bg-[#222] text-white cursor-default'>{quentity}</button>
+            <Link href={"/"} className='w-[48%]'>
               <button className='w-[100%] py-2 border bg-green-500 text-white'>Add Item</button>
             </Link>
             </> 
