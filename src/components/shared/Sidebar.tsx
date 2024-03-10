@@ -1,5 +1,5 @@
 'use client'
-import { BellRing, ClipboardMinus, Edit, IndianRupee, Newspaper, Package, Settings, Truck, UsersRound } from 'lucide-react'
+import { BellRing, ClipboardMinus, Edit, IndianRupee, Newspaper, Package, Settings, ShoppingCart, Truck, UsersRound } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -23,7 +23,7 @@ const SidebarBtnComponent = ({url,icons,title}:Props) => {
 const Sidebar = () => {
 
   return (
-    <div className='w-full h-full py-4 px-4'>
+    <div className='w-full h-full py-4 px-4 max-lg:hidden'>
         <Link href={'/'} className='items-end'>
             <p className='text-white font-semibold text-[1.25rem] flex gap-1 items-center mt-16'>
             <IndianRupee size={22}/>
@@ -58,8 +58,8 @@ const Sidebar = () => {
              <SidebarBtnComponent 
               key={3} 
               url={'/dashboard/items'}
-              title={'items'}
-              icons={<Package size={20} />}
+              title={'Buy Items'}
+              icons={<ShoppingCart size={20}/>}
               />
 
               <SidebarBtnComponent 

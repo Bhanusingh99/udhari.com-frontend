@@ -1,6 +1,4 @@
 import GroceryCard from '@/components/items/GroceryCard'
-import Image from 'next/image'
-import Link from 'next/link'
 import React from 'react'
 
 const itemsList = [
@@ -143,14 +141,14 @@ const itemsList = [
 
 const DashboardItems = () => {
   return (
-    <div className='mt-16 px-6  overflow-y-scroll mx-auto'>
+    <div className='mt-16 px-6  overflow-y-scroll mx-auto max-sm:px-2'>
 
         <h1 className='text-[1.75rem] font-semibold text-white'>
           udhari.com 
         <span className='text-green-500'> Grocery</span>
         </h1>
 
-        <div className='flex flex-wrap w-full mt-4'>
+        <div className='flex flex-wrap gap-4 w-full mt-4'>
               {
                 itemsList.map((items,index) => (
                     <GroceryCard

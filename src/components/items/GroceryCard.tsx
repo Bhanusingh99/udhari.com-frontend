@@ -1,3 +1,5 @@
+import { calculateDiscountedPrice } from '@/helper/calculateItemPrice'
+import { IndianRupee } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
@@ -13,8 +15,9 @@ interface Props{
 }
 
 const GroceryCard = ({name,imgUrl,originalPrice,discount,quentity,storeName,inStock}:Props) => {
+    const price = calculateDiscountedPrice(originalPrice,discount)
   return (
-    <div className='py-4 px-4 w-[25%] h-[22rem] bg-white m-4'>
+    <div className='py-4 px-4 w-[25%] max-md:w-full h-[22rem] bg-white m-4'>
 
     <Link href={"/"} className='flex justify-center items-center h-[50%]'>
           <Image src={`${imgUrl}`} height={120} width={120} alt='jj' />
@@ -29,17 +32,24 @@ const GroceryCard = ({name,imgUrl,originalPrice,discount,quentity,storeName,inSt
     <p className='text-[.9rem] line-clamp-1 w-full'>{storeName}</p>
 
     <div className=' w-full flex gap-2 items-center my-1'>
-      <p>625</p>
-      <p>{originalPrice}</p>
-      <p>{discount}% off</p>
+
+      <p className='flex items-center'>
+        <IndianRupee size={14}/>
+       {price}</p>
+
+       <p className='flex items-center line-through text-[.9rem]'>
+        <IndianRupee size={14}/>
+       {originalPrice}</p>
+
+      <p className='text-green-600'>{discount}% off</p>
     </div>
 
-    <div className='flex justify-between items-center mt-2.5'>
+    <div className='flex justify-between items-center mt-3'>
         
         {
             inStock ?
             <>
-            <button className='w-[45%] py-2 bg-[#222] text-white'>1 L</button>
+            <button className='w-[45%] py-2 bg-[#222] text-white cursor-default'>{quentity}</button>
             <Link href={"/"} className='w-[45%]'>
               <button className='w-[100%] py-2 border bg-green-500 text-white'>Add Item</button>
             </Link>
