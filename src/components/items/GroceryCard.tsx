@@ -17,10 +17,10 @@ interface Props{
 const GroceryCard = ({name,imgUrl,originalPrice,discount,quentity,storeName,inStock}:Props) => {
     const price = calculateDiscountedPrice(originalPrice,discount)
   return (
-    <div className='py-4 px-4 w-[26%] max-md:w-full h-[22rem] bg-white rounded mr-4'>
+    <div className='py-2 px-4 w-[20%] max-md:w-full h-[20rem] bg-white rounded mr-4'>
 
-    <Link href={"/"} className='flex justify-center items-center h-[50%]'>
-          <Image src={`${imgUrl}`} height={120} width={120} alt='jj' />
+    <Link href={"/"} className='flex justify-center items-center h-[50%] w-full'>
+          <Image src={`${imgUrl}`} height={110} width={110} alt='jj' />
     </Link>
 
     <Link href={'/'}>

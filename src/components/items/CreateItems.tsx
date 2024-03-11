@@ -128,7 +128,7 @@ const CreateItems = () => {
                     placeholder="enter your title"
                     className="py-2"
                     required
-                    accept="image/png, image/jpeg, image/jpg, image/jfif"
+                    accept="image/png, image/jpeg, image/jpg, image/jfif, image/webp"
                   />
                   </div>
                   

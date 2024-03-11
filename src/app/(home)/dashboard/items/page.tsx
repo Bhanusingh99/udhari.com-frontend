@@ -31,10 +31,15 @@ const DashboardItems = () => {
   return (
     <div className='mt-16 px-6  overflow-y-scroll mx-auto max-sm:px-6 w-full'>
 
-        <h1 className='text-[1.75rem] font-semibold text-white'>
-          udhari.com 
-        <span className='text-green-500'> Grocery</span>
-        </h1>
+        <div className='mt-4 w-[90%] flex justify-between'>
+          <h1 className='text-[1.75rem] font-semibold text-white'>
+            udhari.com <span className='text-green-500'> Grocery</span>
+          </h1>
+
+          <div>
+            <input type='search' placeholder='search by name' className='py-1.5 px-2 outline-none text-white bg-transparent border' />
+          </div>
+        </div>
 
         <div className='flex flex-wrap gap-8 w-full my-4 '>
               {
