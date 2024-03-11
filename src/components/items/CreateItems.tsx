@@ -33,26 +33,28 @@ const CreateItems = () => {
       }
   }  
 
-  const preview = () => {
-    previewFile(image)
-  }
+  // const preview = () => {
+  //   previewFile(image)
+  // }
 
   const handleSubmit = async () => {
+    previewFile(image)
+
     const formData ={
       title,
       tag,
       image:previewImage,
-      originalPrice,
+      originalPrice:originalPrice,
       totalWeight:weight,
       discount,
       description:Description
     }
   
-    console.log("here",previewImage)
-
     try {
       const res = await axios.post("http://localhost:4000/v1/api/create-items", formData);
-      console.log(res);
+      if(res.statusText === "OK"){
+        window.location.reload();
+      }
     } catch (error) {
       console.error("Error submitting form:", error);
     }
@@ -129,10 +131,6 @@ const CreateItems = () => {
                     accept="image/png, image/jpeg, image/jpg, image/jfif"
                   />
                   </div>
-
-                  {
-                    image && <button onClick={preview} className="h-8s px-2 bg-green-600 text-white">Preview Image</button>
-                  }
                   
               </div>
 

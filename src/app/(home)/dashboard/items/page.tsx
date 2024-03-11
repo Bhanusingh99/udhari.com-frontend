@@ -1,145 +1,33 @@
+'use client'
 import GroceryCard from '@/components/items/GroceryCard'
-import React from 'react'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
 
-const itemsList = [
-  {
-  name:"Saffola Total Refined Cooking Rice Bran & Safflower Blended Oil Can (Mix tel)  (5 L)",
-  imgUrl:"/item/items 1.webp",
-  originalPrice:120,
-  discounted:20,
-  quentity:"1 L",
-  storeName:"Bhanu Singh Store",
-  inStock:true
-},
-{
-  name:"EMAMI Healthy & Tasty Kachchi Ghani Mustard Oil Pouch (Sarson Tel)  (1 L)",
-  imgUrl:"/item/items 2.webp",
-  originalPrice:155,
-  discounted:23,
-  quentity:"1 L",
-  storeName:"Bhanu Singh Store",
-  inStock:true
-},
-{
-  name:"PARLE Hide & Seek Milano Cookies Biscotti  (150 g)",
-  imgUrl:"/item/items 3.webp",
-  originalPrice:120,
-  discounted:25,
-  quentity:"250 gm",
-  storeName:"Bhanu Singh Store",
-  inStock:false
-},
-{
-  name:"Saffola Total Refined Cooking Rice Bran & Safflower Blended Oil Can (Mix tel)  (5 L)",
-  imgUrl:"/item/items 1.webp",
-  originalPrice:120,
-  discounted:20,
-  quentity:"1 L",
-  storeName:"Bhanu Singh Store",
-  inStock:false
-},
-{
-  name:"EMAMI Healthy & Tasty Kachchi Ghani Mustard Oil Pouch (Sarson Tel)  (1 L)",
-  imgUrl:"/item/items 2.webp",
-  originalPrice:155,
-  discounted:23,
-  quentity:"1 L",
-  storeName:"Bhanu Singh Store",
-  inStock:true
-},
-{
-  name:"PARLE Hide & Seek Milano Cookies Biscotti  (150 g)",
-  imgUrl:"/item/items 3.webp",
-  originalPrice:120,
-  discounted:25,
-  quentity:"250 gm",
-  storeName:"Bhanu Singh Store",
-  inStock:false
-},
-{
-  name:"Saffola Total Refined Cooking Rice Bran & Safflower Blended Oil Can (Mix tel)  (5 L)",
-  imgUrl:"/item/items 1.webp",
-  originalPrice:120,
-  discounted:20,
-  quentity:"1 L",
-  storeName:"Bhanu Singh Store",
-  inStock:true
-},
-{
-  name:"EMAMI Healthy & Tasty Kachchi Ghani Mustard Oil Pouch (Sarson Tel)  (1 L)",
-  imgUrl:"/item/items 2.webp",
-  originalPrice:155,
-  discounted:23,
-  quentity:"1 L",
-  storeName:"Bhanu Singh Store",
-  inStock:true
-},
-{
-  name:"PARLE Hide & Seek Milano Cookies Biscotti  (150 g)",
-  imgUrl:"/item/items 3.webp",
-  originalPrice:120,
-  discounted:25,
-  quentity:"250 gm",
-  storeName:"Bhanu Singh Store",
-  inStock:true
-},
-{
-  name:"Saffola Total Refined Cooking Rice Bran & Safflower Blended Oil Can (Mix tel)  (5 L)",
-  imgUrl:"/item/items 1.webp",
-  originalPrice:120,
-  discounted:20,
-  quentity:"1 L",
-  storeName:"Bhanu Singh Store",
-  inStock:true
-},
-{
-  name:"EMAMI Healthy & Tasty Kachchi Ghani Mustard Oil Pouch (Sarson Tel)  (1 L)",
-  imgUrl:"/item/items 2.webp",
-  originalPrice:155,
-  discounted:23,
-  quentity:"1 L",
-  storeName:"Bhanu Singh Store",
-  inStock:false
-},
-{
-  name:"PARLE Hide & Seek Milano Cookies Biscotti  (150 g)",
-  imgUrl:"/item/items 3.webp",
-  originalPrice:120,
-  discounted:25,
-  quentity:"250 gm",
-  storeName:"Bhanu Singh Store",
-  inStock:true
-},
-{
-  name:"Saffola Total Refined Cooking Rice Bran & Safflower Blended Oil Can (Mix tel)  (5 L)",
-  imgUrl:"/item/items 1.webp",
-  originalPrice:120,
-  discounted:20,
-  quentity:"1 L",
-  storeName:"Bhanu Singh Store",
-  inStock:true
-},
-{
-  name:"EMAMI Healthy & Tasty Kachchi Ghani Mustard Oil Pouch (Sarson Tel)  (1 L)",
-  imgUrl:"/item/items 2.webp",
-  originalPrice:155,
-  discounted:23,
-  quentity:"1 L",
-  storeName:"Bhanu Singh Store",
-  inStock:true
-},
-{
-  name:"PARLE Hide & Seek Milano Cookies Biscotti  (150 g)",
-  imgUrl:"/item/items 3.webp",
-  originalPrice:120,
-  discounted:25,
-  quentity:"250 gm",
-  storeName:"Bhanu Singh Store",
-  inStock:false
-},
-]
+interface Item {
+  _id: string;
+  title: string;
+  description: string;
+  tag: string;
+  totalWeight: string;
+  originalPrice: number;
+  discount: number;
+  stock: boolean;
+  image: string;
+  __v: number;
+}
 
 const DashboardItems = () => {
+  const [items, setItems] = useState<Item[]>([]);
+
+  useEffect(() => {
+    const fetchAllItemsData = async () => {
+      const res = await axios.get("http://localhost:4000/v1/api/get-all-items");
+      const array = res.data.response;
+      setItems(array)
+    }
+    fetchAllItemsData()
+  },[])
+
   return (
     <div className='mt-16 px-6  overflow-y-scroll mx-auto max-sm:px-6 w-full'>
 
@@ -150,16 +38,16 @@ const DashboardItems = () => {
 
         <div className='flex flex-wrap gap-8 w-full my-4 '>
               {
-                itemsList.map((items,index) => (
+                items.map((items,index) => (
                     <GroceryCard
                     key={index}
-                    name={items.name}
-                    imgUrl={items.imgUrl}
+                    name={items.title}
+                    imgUrl={items.image}
                     originalPrice={items.originalPrice}
-                    discount={items.discounted}
-                    quentity={items.quentity}
-                    storeName={items.storeName}
-                    inStock={items.inStock}
+                    discount={items.discount}
+                    quentity={items.totalWeight}
+                    storeName={items.description}
+                    inStock={items.stock}
                     />
                 ))
               }
