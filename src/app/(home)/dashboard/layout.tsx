@@ -1,7 +1,10 @@
+'use client'
 import Sidebar from '@/components/shared/Sidebar';
 import React from 'react';
 
 const DashBoard = ({children}:{children:React.ReactNode}) => {
+
+
   return (
     <div className='w-full h-screen flex'>
         <div className='w-[15%] h-screen max-lg:hidden bg-[#111] border-r-[1px] border-[#777]'>

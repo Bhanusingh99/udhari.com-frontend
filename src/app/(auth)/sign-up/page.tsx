@@ -36,7 +36,7 @@ const Sign_Up = () => {
     })
     const res = await api.post("/v1/api/sign-up",formData);
     if(res.data.success){
-      router.push("/dashboard")
+      router.push("/dashboard/customer")
     }
   };
 

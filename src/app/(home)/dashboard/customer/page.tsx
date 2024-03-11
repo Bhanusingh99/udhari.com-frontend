@@ -11,16 +11,8 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import CustomerCard from "@/components/shared/CustomerComponents/CustomerCard";
 import axios from "axios";
-import { sortedTransactions } from "@/helper/filters";
 import SelectedUser from "@/components/shared/SelectedUser";
 import {
   filterAndSortTransactions,
@@ -38,19 +30,20 @@ interface Transaction {
   transactionType: string;
 }
 
-
-interface DropdownProps {
-  onSelect: (selectedItem: string) => void;
-}
-
 const DashboardCustome = () => {
   const [TotalTransactions, setTotalTransactions] = useState<Transaction[]>([]);
 
   const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const [oldestTotalTransactions, setOldestTotalTransactions] = useState<Transaction[]>([]);
-  const [filteredCashTypeTransactions, setFilteredCashTypeTransactions] =useState<Transaction[]>([]);
-  const [filteredCreditTypeTransactions, setFilteredCreditTypeTransactions] =useState<Transaction[]>([]);
-  const [filteredMostCredit, setFilteredMostCredit] = useState<Transaction[]>([]);
+  const [oldestTotalTransactions, setOldestTotalTransactions] = useState<
+    Transaction[]
+  >([]);
+  const [filteredCashTypeTransactions, setFilteredCashTypeTransactions] =
+    useState<Transaction[]>([]);
+  const [filteredCreditTypeTransactions, setFilteredCreditTypeTransactions] =
+    useState<Transaction[]>([]);
+  const [filteredMostCredit, setFilteredMostCredit] = useState<Transaction[]>(
+    []
+  );
   const [searchQuery, setSearchQuery] = useState("");
   const [userSelected, setuserSelected] = useState("");
   const [totalCash, setTotalCash] = useState();
@@ -59,11 +52,16 @@ const DashboardCustome = () => {
   const [selectedFilter, setSelectedFilter] = useState<string>("Most recent");
   const [selectedSort, setSelectedSort] = useState<string>("");
 
-
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
 
-  const options = ["Most recent", "oldest","You'll Get", "You Got","Highest Amount"];
+  const options = [
+    "Most recent",
+    "oldest",
+    "You'll Get",
+    "You Got",
+    "Highest Amount",
+  ];
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -71,7 +69,7 @@ const DashboardCustome = () => {
 
   const handleOptionClick = (option: string) => {
     setSelectedOption(option);
-    setSelectedFilter(option)
+    setSelectedFilter(option);
     setIsOpen(false); // Collapse the dropdown after selecting an option
   };
 
@@ -82,13 +80,13 @@ const DashboardCustome = () => {
       );
 
       const array = res.data.data.transactions;
-      console.log(array)
+      console.log(array);
       setOldestTotalTransactions(array);
       setTransactions(filterAndSortTransactions(array));
       setFilteredMostCredit(filterAndSortCreditTransactions(array));
       setFilteredCashTypeTransactions(filterTransactionsByType(array, "CASH"));
       setFilteredCreditTypeTransactions(
-      filterTransactionsByType(array, "CREDIT")
+        filterTransactionsByType(array, "CREDIT")
       );
 
       setTotalCash(res.data.data.totalCash);
@@ -111,15 +109,21 @@ const DashboardCustome = () => {
         setTotalTransactions(filteredCreditTypeTransactions);
       } else if (selectedFilter === "You Got") {
         setTotalTransactions(filteredCashTypeTransactions);
-      }else if (selectedFilter === "Highest Amount") {
+      } else if (selectedFilter === "Highest Amount") {
         setTotalTransactions(filteredMostCredit);
-      }else if (selectedFilter === "oldest") {
+      } else if (selectedFilter === "oldest") {
         setTotalTransactions(oldestTotalTransactions);
       }
     };
 
     updateTotalTransactions();
-  }, [transactions,selectedFilter, selectedSort, oldestTotalTransactions, filteredCreditTypeTransactions]);
+  }, [
+    transactions,
+    selectedFilter,
+    selectedSort,
+    oldestTotalTransactions,
+    filteredCreditTypeTransactions,
+  ]);
 
   useEffect(() => {
     const delay = 10;
@@ -127,8 +131,10 @@ const DashboardCustome = () => {
     const timer = setTimeout(() => {
       const getSearchedCustomer = async () => {
         try {
-          const res = await axios.get(`http://localhost:4000/v1/api/search/${searchQuery}`);
-            setTotalTransactions(res.data.data)
+          const res = await axios.get(
+            `http://localhost:4000/v1/api/search/${searchQuery}`
+          );
+          setTotalTransactions(res.data.data);
         } catch (error: any) {
           console.error("Error fetching data:", error.message);
           // Handle errors, e.g., set an error state or show a message to the user
@@ -145,18 +151,10 @@ const DashboardCustome = () => {
     setuserSelected(customerId);
   };
 
-
-  const checkEmpty = () =>{
-    if(searchQuery === ""){
-      setTotalTransactions(transactions)
-    }
-  }
-
   const param = usePathname();
   return (
     <div className="w-full h-full bg-green-500 flex">
       <div className="w-[55%] h-full bg-[#222] border-r-[1px] border-[#888]">
-
         <div className="w-full h-16 border-b-[1px] border-[#888] flex justify-around items-center mt-16">
           <div className="flex justify-center items-end gap-1">
             <p className="text-white">
@@ -184,8 +182,10 @@ const DashboardCustome = () => {
           </div>
         </div>
 
-        <div className="py-4 border-b-[1px] border-[#888] flex justify-between items-center px-4
-        max-md:flex-col">
+        <div
+          className="py-4 border-b-[1px] border-[#888] flex justify-between items-center px-4
+        max-md:flex-col"
+        >
           <div className="">
             <p className="text-white my-1 text-[1rem]">Search for customers</p>
             <div className="flex items-center justify-center border-[1px] border-[#777] px-4">
@@ -200,26 +200,31 @@ const DashboardCustome = () => {
             </div>
           </div>
 
-        <div>
-          <p className="text-white mb-1">Filter</p>
-          <div className="dropdown py-2 px-4 text-white border border-[#999] w-[220px] max-md:w-full">
-            <button 
-            className="flex gap-2 justify-between w-full items-center"
-            onClick={toggleMenu}>{selectedOption === "" ? "Filter" : selectedOption}
-            <ChevronDown size={20}/>
-            </button>
-            {isOpen && (
-              <ul className="menu absolute bg-white text-black mt-2 w-[220px] py-2 px-1 ml-[-1rem]">
-                {options.map((option) => (
-                  <li key={option} onClick={() => handleOptionClick(option)} className="cursor-pointer my-1">
-                    {option}
-                  </li>
-                ))}
-              </ul>
-            )}
+          <div>
+            <p className="text-white mb-1">Filter</p>
+            <div className="dropdown py-2 px-4 text-white border border-[#999] w-[220px] max-md:w-full">
+              <button
+                className="flex gap-2 justify-between w-full items-center"
+                onClick={toggleMenu}
+              >
+                {selectedOption === "" ? "Filter" : selectedOption}
+                <ChevronDown size={20} />
+              </button>
+              {isOpen && (
+                <ul className="menu absolute bg-white text-black mt-2 w-[220px] py-2 px-1 ml-[-1rem]">
+                  {options.map((option) => (
+                    <li
+                      key={option}
+                      onClick={() => handleOptionClick(option)}
+                      className="cursor-pointer my-1"
+                    >
+                      {option}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
           </div>
-        </div>
-
         </div>
 
         <div
