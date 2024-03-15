@@ -32,6 +32,7 @@ interface Transaction {
 }
 
 const DashboardCustome = () => {
+  const {userId} = useContext(userContext);
   const [TotalTransactions, setTotalTransactions] = useState<Transaction[]>([]);
 
   const [transactions, setTransactions] = useState<Transaction[]>([]);
@@ -47,8 +48,8 @@ const DashboardCustome = () => {
   );
   const [searchQuery, setSearchQuery] = useState("");
   const [userSelected, setuserSelected] = useState("");
-  const [totalCash, setTotalCash] = useState();
-  const [totalCredit, setTotalCredit] = useState();
+  const [totalCash, setTotalCash] = useState(0);
+  const [totalCredit, setTotalCredit] = useState(0);
 
   const [selectedFilter, setSelectedFilter] = useState<string>("Most recent");
   const [selectedSort, setSelectedSort] = useState<string>("");
@@ -76,12 +77,15 @@ const DashboardCustome = () => {
 
   const getAllCustomers = async () => {
     try {
-      const res = await axios.get(
-        "http://localhost:4000/v1/api/total-customers-transactions"
+      const data = {
+        userId:userId
+      }
+      const res = await axios.post(
+        "http://localhost:4000/v1/api/total-customers-transactions",data
       );
 
-      const array = res.data.data.transactions;
-      console.log(array);
+      const array = res.data.totalCustomer;
+      console.log(array)
       setOldestTotalTransactions(array);
       setTransactions(filterAndSortTransactions(array));
       setFilteredMostCredit(filterAndSortCreditTransactions(array));
@@ -90,8 +94,8 @@ const DashboardCustome = () => {
         filterTransactionsByType(array, "CREDIT")
       );
 
-      setTotalCash(res.data.data.totalCash);
-      setTotalCredit(res.data.data.totalCredit);
+      setTotalCash(699);
+      setTotalCredit(1299);
     } catch (error) {
       throw error;
     }
@@ -99,7 +103,7 @@ const DashboardCustome = () => {
 
   useEffect(() => {
     getAllCustomers();
-  }, []);
+  }, [userId]);
 
   useEffect(() => {
     // Function to update TotalTransactions based on selectedFilter and selectedSort
@@ -152,7 +156,6 @@ const DashboardCustome = () => {
     setuserSelected(customerId);
   };
 
-  const userId = useContext(userContext)
   const param = usePathname();
   return (
     <div className="w-full h-full bg-green-500 flex">
@@ -244,8 +247,8 @@ const DashboardCustome = () => {
                     time={items.createdAt} //@ts-ignore
                     form={items.transactionType}
                     money={items.money} //@ts-ignore
-                    bgColor={items.bgColor}
-                    onClick={() => handleCustomerCardClick(items.id)}
+                    bgColor={items.bgColor}//@ts-ignore
+                    onClick={() => handleCustomerCardClick(items._id)}
                   />
                 );
               })}
@@ -256,7 +259,7 @@ const DashboardCustome = () => {
         </div>
       </div>
 
-      <div className="w-[45%] h-full bg-[#222] max-lg:hidden">
+      <div className="w-[45%] h-full bg-[#222]">
         {userSelected ? (
           <SelectedUser value={userSelected} />
         ) : (

@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
 import {
   Dialog,
@@ -12,8 +12,11 @@ import {
 import { CircleFadingPlus } from "lucide-react";
 import Image from "next/image";
 import axios from "axios";
+import { userContext } from "@/context/userContext";
 
 const CreateItems = () => {
+  const id = useContext(userContext) 
+  const userId = id.userId;
   const[title,setTitle] = useState("");
   const[Description,setDescription] = useState("");
   const[tag,setTag] = useState("");
@@ -47,7 +50,8 @@ const CreateItems = () => {
       originalPrice:originalPrice,
       totalWeight:weight,
       discount,
-      description:Description
+      description:Description,
+      userId
     }
   
     try {

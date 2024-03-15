@@ -63,6 +63,9 @@ const Addcutomer = () => {
     setDropdownOpen(!isDropdownOpen);
   };
 
+  const userId = useContext(userContext) 
+  const id = userId.userId;
+
   const handleItemClick = (value: any) => {
     setSelectedValue(value);
     setDropdownOpen(false);
@@ -76,7 +79,8 @@ const Addcutomer = () => {
       number,
       money,
       description:description,
-      transactionType:selectedValue
+      transactionType:selectedValue,
+      userId:id
     }
 
     try {
@@ -90,8 +94,7 @@ const Addcutomer = () => {
 
   };
 
-  const userId = useContext(userContext) 
-  console.log("from add customer",userId.userId)
+  
   return (
     <div>
       <Sheet>

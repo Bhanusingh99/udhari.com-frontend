@@ -1,8 +1,9 @@
+import { userContext } from '@/context/userContext'
 import { calculateDiscountedPrice } from '@/helper/calculateItemPrice'
 import { IndianRupee } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import React from 'react'
+import React, { useContext } from 'react'
 
 interface Props{
     name:string,
@@ -15,7 +16,7 @@ interface Props{
 }
 
 const GroceryCard = ({name,imgUrl,originalPrice,discount,quentity,storeName,inStock}:Props) => {
-    const price = calculateDiscountedPrice(originalPrice,discount)
+  const price = calculateDiscountedPrice(originalPrice,discount)
   return (
     <div className='py-2 px-4 w-[20%] max-md:w-full h-[20rem] bg-white rounded mr-4'>
 

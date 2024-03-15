@@ -1,7 +1,8 @@
 'use client'
 import GroceryCard from '@/components/items/GroceryCard'
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { userContext } from './../../../../context/userContext';
 
 interface Item {
   _id: string;
@@ -19,6 +20,7 @@ interface Item {
 const DashboardItems = () => {
   const [items, setItems] = useState<Item[]>([]);
 
+
   useEffect(() => {
     const fetchAllItemsData = async () => {
       const res = await axios.get("http://localhost:4000/v1/api/get-all-items");
@@ -27,7 +29,7 @@ const DashboardItems = () => {
     }
     fetchAllItemsData()
   },[])
-
+  
   return (
     <div className='mt-16 px-6  overflow-y-scroll mx-auto max-sm:px-6 w-full'>
 

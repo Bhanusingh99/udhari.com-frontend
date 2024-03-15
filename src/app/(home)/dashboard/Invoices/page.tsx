@@ -1,7 +1,8 @@
 "use client"
 import InvoiceCard from '@/components/shared/invoice/InvoiceCard'
+import { userContext } from '@/context/userContext';
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 
 interface Transaction {
@@ -20,7 +21,8 @@ interface Transaction {
 
   const Invoices = () => {
     const [arr, setArr] = useState<Transaction[]>([]);
-
+    const {userId} = useContext(userContext);
+    console.log(userId)
     const[name,setName] = useState("")
     const[money,setMoney] = useState(0)
     const[description,setDescription] = useState("")
@@ -38,10 +40,14 @@ interface Transaction {
       };
       const getAllCustomers = async () => {
         try {
-          const res = await axios.get(
-            "http://localhost:4000/v1/api/total-customers-transactions"
+          const data = {
+            userId:userId
+          }
+          const res = await axios.post(
+            "http://localhost:4000/v1/api/total-customers-transactions",data
           );
-          setArr(sortedTransactions(res.data.data.transactions));
+    
+          setArr(sortedTransactions(res.data.totalCustomer));
         } catch (error) {
           throw error
         }
@@ -103,7 +109,7 @@ interface Transaction {
       };
 
   return (
-    <div className='overflow-y-scroll mt-20 px-4'>
+    <div className='overflow-y-scroll mt-20 px-4 w-full'>
     <h1 className='text-[2rem] text-white font-semibold'>Generate Invoices</h1>
     <div className='mt-4 text-black py-2 flex flex-wrap w-full'>
         {
