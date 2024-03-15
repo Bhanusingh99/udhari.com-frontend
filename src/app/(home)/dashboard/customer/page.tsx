@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import CustomerCard from "@/components/shared/CustomerComponents/CustomerCard";
 import axios from "axios";
 import SelectedUser from "@/components/shared/SelectedUser";
@@ -19,6 +19,7 @@ import {
   filterAndSortCreditTransactions,
   filterTransactionsByType,
 } from "@/helper/filterBasedOnTime";
+import { userContext } from "@/context/userContext";
 
 interface Transaction {
   customerName: string;
@@ -151,10 +152,11 @@ const DashboardCustome = () => {
     setuserSelected(customerId);
   };
 
+  const userId = useContext(userContext)
   const param = usePathname();
   return (
     <div className="w-full h-full bg-green-500 flex">
-      <div className="w-[55%] h-full bg-[#222] border-r-[1px] border-[#888]">
+      <div className="w-[55%] h-full bg-[#222] border-r-[1px] border-[#888] max-lg:w-full">
         <div className="w-full h-16 border-b-[1px] border-[#888] flex justify-around items-center mt-16">
           <div className="flex justify-center items-end gap-1">
             <p className="text-white">
@@ -184,7 +186,7 @@ const DashboardCustome = () => {
 
         <div
           className="py-4 border-b-[1px] border-[#888] flex justify-between items-center px-4
-        max-md:flex-col"
+        max-sm:flex-col"
         >
           <div className="">
             <p className="text-white my-1 text-[1rem]">Search for customers</p>
@@ -202,7 +204,7 @@ const DashboardCustome = () => {
 
           <div>
             <p className="text-white mb-1">Filter</p>
-            <div className="dropdown py-2 px-4 text-white border border-[#999] w-[220px] max-md:w-full">
+            <div className="dropdown py-2 px-4 text-white border border-[#999] w-[220px]">
               <button
                 className="flex gap-2 justify-between w-full items-center"
                 onClick={toggleMenu}
@@ -254,7 +256,7 @@ const DashboardCustome = () => {
         </div>
       </div>
 
-      <div className="w-[45%] h-full bg-[#222]">
+      <div className="w-[45%] h-full bg-[#222] max-lg:hidden">
         {userSelected ? (
           <SelectedUser value={userSelected} />
         ) : (

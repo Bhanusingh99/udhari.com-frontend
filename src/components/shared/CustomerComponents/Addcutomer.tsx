@@ -1,5 +1,5 @@
 import { Plus } from "lucide-react";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Sheet,
   SheetContent,
@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/sheet";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { userContext } from "@/context/userContext";
 
 interface Props {
   label: string;
@@ -89,6 +90,8 @@ const Addcutomer = () => {
 
   };
 
+  const userId = useContext(userContext) 
+  console.log("from add customer",userId.userId)
   return (
     <div>
       <Sheet>

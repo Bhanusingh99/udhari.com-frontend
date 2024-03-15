@@ -10,8 +10,9 @@ export async function GET(request: NextRequest) {
         }
 
 
+        const payload = jwt.verify(cookie,process.env.JWT_TOKEN_SECRET!)
         return NextResponse.json({
-            cookie,
+            payload
         });
     } catch (error) {
         return NextResponse.json({
