@@ -20,6 +20,7 @@ import {
   filterTransactionsByType,
 } from "@/helper/filterBasedOnTime";
 import { userContext } from "@/context/userContext";
+import { getTimeAgo } from "@/helper/getTime";
 
 interface Transaction {
   customerName: string;
@@ -244,7 +245,7 @@ const DashboardCustome = () => {
                     key={index}
                     id={items.id} //@ts-ignore
                     name={items.customerName} //@ts-ignore
-                    time={items.createdAt} //@ts-ignore
+                    time={getTimeAgo(items.createdAt)} //@ts-ignore
                     form={items.transactionType}
                     money={items.money} //@ts-ignore
                     bgColor={items.bgColor}//@ts-ignore

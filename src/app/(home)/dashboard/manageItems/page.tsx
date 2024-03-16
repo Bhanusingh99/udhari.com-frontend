@@ -1,7 +1,7 @@
 'use client'
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
-import { PackageOpen } from 'lucide-react';
+import { IndianRupee, PackageOpen, SquarePen, Trash2 } from 'lucide-react';
 import CreateItems from '@/components/items/CreateItems';
 import { userContext } from '@/context/userContext';
 
@@ -15,16 +15,18 @@ interface Item {
 const ManageItems: React.FC = () => {
   const [items, setItems] = useState<Item[]>([]);
   const {userId} = useContext(userContext);
-
+  console.log(userId)
   useEffect(() => {
     const fetchItems = async () => {
       try {
         const response = await axios.post<{ data: Item[] }>(
           'http://localhost:4000/v1/api/get-individual-created-items',
-           userId 
+           {userId} 
         );
+        //@ts-ignore
         const array = response.data.res
-        // Extract only the required fields from each item
+        console.log(array)
+        //@ts-ignore
         const extractedItems = array.map(item => ({
           _id: item._id,
           title: item.title,
@@ -49,20 +51,34 @@ const ManageItems: React.FC = () => {
         <CreateItems />
       </div>
 
-      <div className='w-full h-[80vh] flex justify-center items-center'>
+      <div className=''>
         {items.length === 0 ? (
-          <div className=''>
+          <div className='w-full h-[80vh] flex justify-center items-center'>
             <PackageOpen size={90} color='white' className='w-full flex justify-center items-center' />
             <p className='text-[1.5rem] text-white'>Add items and no items are there</p>
           </div>
         ) : (
-          <div className="w-full mt-6 flex flex-col gap-2">
+          <div className="w-[95%] mt-6 flex mx-auto flex-col gap-2 h-screen overflow-y-scroll">
             {items.map(item => (
-              <div key={item._id} className='bg-white'>
-                <p>{item.title}</p>
-                <p>{item.description}</p>
-                <p>{item.price}</p>
-                <p>{item.stock ? 'In Stock' : 'Out of Stock'}</p>
+              <div key={item._id} className='bg-white flex justify-between px-4 py-2 rounded-xl'>
+
+                <div>
+                <p className='text-[.9rem] font-semibold'>{item.title}</p>
+                <p className='line-clamp-1'>{item.description}</p>
+                <p className={`${item.stock ? "text-green-600" : "text-red-500"}`}>{item.stock ? 'In Stock' : 'Out of Stock'}</p>
+                </div>
+
+                <div className='flex flex-col items-end gap-1'>
+                  
+                <p className="flex items-center">
+                  <IndianRupee size={16}/>
+                  {/* @ts-ignore */}
+                  {item.price}
+                  </p>
+                <SquarePen  size={20} color="blue"/>
+                <Trash2  size={20} color="red"/>
+                </div>
+
               </div>
             ))}
           </div>
