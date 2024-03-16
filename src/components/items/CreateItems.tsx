@@ -71,7 +71,7 @@ const CreateItems = () => {
         <DialogTrigger>
            <CircleFadingPlus size={42} strokeWidth={2.5} color="white"/>
         </DialogTrigger>
-        <DialogContent className="bg-white">
+        <DialogContent className="bg-white overflow-y-scroll h-screen py-2 ">
           <DialogHeader>
             <DialogTitle>Create Item</DialogTitle>
             <DialogDescription>

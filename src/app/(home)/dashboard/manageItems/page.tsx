@@ -54,16 +54,15 @@ const ManageItems: React.FC = () => {
       <div className=''>
         {items.length === 0 ? (
           <div className='w-full h-[80vh] flex justify-center items-center'>
-            <PackageOpen size={90} color='white' className='w-full flex justify-center items-center' />
-            <p className='text-[1.5rem] text-white'>Add items and no items are there</p>
+            <PackageOpen size={90} color='white' className='w-full flex justify-center items-center'/>
           </div>
         ) : (
-          <div className="w-[95%] mt-6 flex mx-auto flex-col gap-2 h-screen overflow-y-scroll">
+          <div className="w-full px-12 py-2 max-md:px-2 mt-6 flex mx-auto flex-col gap-2 h-[80vh] overflow-y-scroll">
             {items.map(item => (
               <div key={item._id} className='bg-white flex justify-between px-4 py-2 rounded-xl'>
 
-                <div>
-                <p className='text-[.9rem] font-semibold'>{item.title}</p>
+                <div className='w-[80%]'>
+                <p className='text-[.9rem] font-semibold line-clamp-2'>{item.title}</p>
                 <p className='line-clamp-1'>{item.description}</p>
                 <p className={`${item.stock ? "text-green-600" : "text-red-500"}`}>{item.stock ? 'In Stock' : 'Out of Stock'}</p>
                 </div>

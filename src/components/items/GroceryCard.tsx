@@ -21,7 +21,7 @@ const GroceryCard = ({name,imgUrl,originalPrice,discount,quentity,storeName,inSt
     <div className='py-2 px-4 w-[20%] max-md:w-full h-[20rem] bg-white rounded mr-4'>
 
     <Link href={"/"} className='flex justify-center items-center h-[50%] w-full'>
-          <Image src={`${imgUrl}`} height={110} width={110} alt='jj' />
+          <Image src={`${imgUrl}`} height={105} width={105} alt='jj' />
     </Link>
 
     <Link href={'/'}>
